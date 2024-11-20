@@ -13,12 +13,10 @@ import { Users, UserPlus, UserMinus } from "lucide-react";
 // ShadCN
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import {
-	fetchUserProfile,
-	followUser,
-	unFollowUser,
-} from "@/services/AppService";
+import { followUser, unFollowUser } from "@/services/AppService";
 import { useAuth } from "@/hooks/useAuth";
+
+import useFetch from "@/hooks/useFetch";
 
 const User = () => {
 	const USER_PAGE_ICON_SIZE = 15;
@@ -28,34 +26,18 @@ const User = () => {
 	const [isFollowed, setIsFollowed] = useState(false);
 	const [posts, setPosts] = useState();
 	const [profileUser, setProfileUser] = useState();
-	// TODO : Integrate Loading screen and error
-	const [loading, setLoading] = useState();
-	const [error, setError] = useState();
 
 	const { user } = useAuth();
 
+	const [data, error, isLoading] = useFetch(`/app/users/${userId}`, {}, [
+		userId,
+	]);
+
 	useEffect(() => {
-		const fetchProfileData = async () => {
-			setLoading(true);
-			setError(null);
-
-			try {
-				const profileData = await fetchUserProfile(userId);
-
-				setProfileUser(profileData.user);
-				setPosts(profileData.posts);
-				setIsFollowed(profileData.isFollowed);
-			} catch (error) {
-				console.log(error);
-
-				setError(error.message);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchProfileData();
-	}, [userId]);
+		setProfileUser(data?.user);
+		setPosts(data?.posts);
+		setIsFollowed(data?.isFollowed);
+	}, [data]);
 
 	const handleFollow = async (userFollowed) => {
 		setIsFollowed(userFollowed);

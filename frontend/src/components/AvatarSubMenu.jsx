@@ -21,8 +21,6 @@ import { useAuth } from "@/hooks/useAuth";
 const AvatarSubMenu = () => {
 	const { user, logout } = useAuth();
 
-	console.log(user);
-
 	const { theme, setTheme } = useTheme();
 
 	const handleThemeChange = () => {

@@ -9,35 +9,19 @@ TODO:
 // Components
 import FeedCard from "@/components/FeedCard";
 import { useEffect, useState } from "react";
-import { fetchPostFeed } from "@/services/AppService";
 
 // Icons
 import { LoaderPinwheel } from "lucide-react";
+import useFetch from "@/hooks/useFetch";
 
 const HomeFeed = () => {
-	const [loading, setLoading] = useState();
-	// TODO: Error Toasts
-	const [error, setError] = useState();
+	const [data, error, isLoading] = useFetch("/app/feed");
+
 	const [posts, setPosts] = useState();
 
 	useEffect(() => {
-		const getData = async () => {
-			setLoading(true);
-
-			try {
-				const response = await fetchPostFeed();
-				console.log(response.posts);
-				setPosts(response.posts);
-			} catch (error) {
-				console.log(error);
-				setError(error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		getData();
-	}, []);
+		setPosts(data?.posts);
+	}, [data]);
 
 	return (
 		<div className="w-full mx-auto md:w-5/6  max-w-screen-xl ">
@@ -58,7 +42,7 @@ const HomeFeed = () => {
 					</div>
 				</div>
 			)}
-			{loading && (
+			{isLoading && (
 				<div className=" w-full">
 					<LoaderPinwheel
 						className="animate-spin mx-auto"
