@@ -5,13 +5,14 @@ import { useLocation, useParams } from "react-router-dom";
 import Comment from "@/components/Comment";
 import { useEffect, useState } from "react";
 import ImageCard from "@/components/ImageCard";
-import { fetchSinglePost, postComment } from "@/services/AppService";
+import { postComment } from "@/services/AppService";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { SendHorizontal } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import useFetch from "@/hooks/useFetch";
 
 const Post = () => {
 	const { postId } = useParams();
@@ -24,31 +25,19 @@ const Post = () => {
 
 	const { user } = useAuth();
 
+	const [data, error, isLoading] = useFetch(
+		`/app/posts/${postId}`,
+		{},
+		[postId],
+		"Failed to fetch posts"
+	);
+
 	useEffect(() => {
-		// Start the view from top of the page
 		document.body.scrollTop = document.documentElement.scrollTop = 0;
 
-		const getPost = async () => {
-			try {
-				const response = await fetchSinglePost(postId);
-				console.log(response.post);
-
-				setPost(response.post);
-				setComments(response.comments);
-			} catch (error) {
-				console.log(error.message);
-			}
-		};
-
-		// TODO: Optimize this
-		// if uncommented, then allows imageCard to load with postInProps which doesnt initialize likes properly
-		// If post is not passed by props, then fetch post
-		// if (post === null) {
-		// 	console.log("calling getPost");
-
-		// }
-		getPost();
-	}, [postId]);
+		setPost(data?.post);
+		setComments(data?.comments);
+	}, [data]);
 
 	const handleCommentSubmit = async () => {
 		const trimmedComment = commentContent.trim();

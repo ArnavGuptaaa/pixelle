@@ -30,6 +30,7 @@ export const registerService = async (userCredentials) => {
 	}
 };
 
+// TODO: Update this to axios
 export const verifyTokenService = async (token) => {
 	const VERIFY_TOKEN_URL = `${BASE_URL}/auth/me`;
 	const requestOptions = {

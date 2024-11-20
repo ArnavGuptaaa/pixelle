@@ -25,49 +25,6 @@ export const createPostService = async (formData) => {
 	}
 };
 
-export const fetchPostFeed = async () => {
-	const FETCH_FEED_URL = `${BASE_URL}/app/feed`;
-
-	try {
-		const response = await axios.get(FETCH_FEED_URL);
-
-		console.log(response.data);
-		return response.data;
-	} catch (error) {
-		throw new Error(
-			error.response?.data?.message || "Failed to fetch posts"
-		);
-	}
-};
-
-export const fetchSinglePost = async (postId) => {
-	const FETCH_POST_URL = `${BASE_URL}/app/posts/${postId}`;
-
-	try {
-		const response = await axios.get(FETCH_POST_URL);
-
-		return response.data;
-	} catch (error) {
-		throw new Error(
-			error.response?.data?.message || "Failed to fetch posts"
-		);
-	}
-};
-
-export const fetchUserProfile = async (userId) => {
-	const FETCH_USER_PROFILE_URL = `${BASE_URL}/app/users/${userId}`;
-
-	try {
-		const response = await axios.get(FETCH_USER_PROFILE_URL);
-
-		return response.data;
-	} catch (error) {
-		throw new Error(
-			error.response?.data?.message || "Failed to fetch profile"
-		);
-	}
-};
-
 export const postComment = async (commentData) => {
 	const POST_COMMENT_URL = `${BASE_URL}/app/comment`;
 

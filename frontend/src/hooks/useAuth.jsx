@@ -1,5 +1,5 @@
-import { useState, useContext, createContext, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useContext, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
 	loginService,
@@ -15,42 +15,6 @@ export const AuthProvider = ({ children }) => {
 	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
-	const location = useLocation();
-
-	// useEffect(() => {
-	// 	console.log("AUTH RENDERED");
-
-	// 	const verifyToken = async () => {
-	// 		setLoading(true);
-	// 		const token = localStorage.getItem("token");
-
-	// 		if (token === null) {
-	// 			navigate("/auth/login", { replace: true });
-	// 			setLoading(false);
-
-	// 			return;
-	// 		}
-
-	// 		try {
-	// 			const response = await verifyTokenService(token);
-
-	// 			setUser(response.user.username);
-	// 			console.log("AuthProvider | username", response.user.username);
-
-	// 			console.log(`AuthProvider | Routing to ${location.pathname}`);
-	// 			navigate(location.pathname);
-	// 		} catch (error) {
-	// 			console.log("Token verification failed : ", error.message);
-
-	// 			localStorage.removeItem("token");
-	// 			navigate("/auth/login", { replace: true });
-	// 		} finally {
-	// 			setLoading(false);
-	// 		}
-	// 	};
-
-	// 	verifyToken();
-	// }, []);
 
 	const login = async (userCredentials) => {
 		setLoading(true);
