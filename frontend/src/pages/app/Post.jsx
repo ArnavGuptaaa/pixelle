@@ -25,9 +25,12 @@ const Post = () => {
 
 	const { user } = useAuth();
 
-	const [data, error, isLoading] = useFetch(`/app/posts/${postId}`, {}, [
-		postId,
-	]);
+	const [data, error, isLoading] = useFetch(
+		`/app/posts/${postId}`,
+		{},
+		[postId],
+		"Failed to fetch posts"
+	);
 
 	useEffect(() => {
 		document.body.scrollTop = document.documentElement.scrollTop = 0;

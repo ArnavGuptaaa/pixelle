@@ -15,7 +15,12 @@ import { LoaderPinwheel } from "lucide-react";
 import useFetch from "@/hooks/useFetch";
 
 const HomeFeed = () => {
-	const [data, error, isLoading] = useFetch("/app/feed");
+	const [data, error, isLoading] = useFetch(
+		"/app/feed",
+		{},
+		[],
+		"Failed to fetch posts"
+	);
 
 	const [posts, setPosts] = useState();
 

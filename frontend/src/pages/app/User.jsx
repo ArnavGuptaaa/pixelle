@@ -29,9 +29,12 @@ const User = () => {
 
 	const { user } = useAuth();
 
-	const [data, error, isLoading] = useFetch(`/app/users/${userId}`, {}, [
-		userId,
-	]);
+	const [data, error, isLoading] = useFetch(
+		`/app/users/${userId}`,
+		{},
+		[userId],
+		"Failed to fetch profile"
+	);
 
 	useEffect(() => {
 		setProfileUser(data?.user);
