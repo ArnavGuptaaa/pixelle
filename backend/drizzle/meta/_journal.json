@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1730566253434,
+      "tag": "0000_rare_maggott",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1731758750349,
+      "tag": "0001_superb_tempest",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1732080135400,
+      "tag": "0002_violet_ghost_rider",
+      "breakpoints": true
+    }
+  ]
+}
