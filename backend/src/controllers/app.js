@@ -10,14 +10,14 @@ import {
 	createLikeRecord,
 	getExistingLike,
 	deleteLikeRecord,
+	getPostRecord,
+	deletePostRecord,
 } from "../services/posts.js";
 import {
 	doesFollowExist,
 	createFollowRecord,
 	deleteFollowRecord,
 	getUser,
-	incrementFollowCount,
-	decrementFollowCount,
 } from "../services/users.js";
 import { longtext } from "drizzle-orm/mysql-core";
 
@@ -272,6 +272,40 @@ export const unlikePost = async (req, res, next) => {
 		return res.status(200).json({
 			success: true,
 			message: "Post unliked",
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteSinglePost = async (req, res, next) => {
+	try {
+		// This route expects postId in request parameters
+		// console.log(req.params.id);
+
+		// check if post exists
+		const postRecord = await getPostRecord(req.params.id);
+
+		// If not, then return Error
+		if (!postRecord) {
+			throw new ErrorResponse(400, "Post doesn't exist");
+		}
+
+		// if post exists, check if the author of post is same as the person trying to delete it
+		if (postRecord.userId !== req.user.id) {
+			throw new ErrorResponse(
+				400,
+				"Post does not belong to user attempting to delete it"
+			);
+		}
+
+		// if yes, then proceeed to delete
+		await deletePostRecord(postRecord);
+
+		// return success
+		return res.status(200).json({
+			success: true,
+			message: "Post deleted",
 		});
 	} catch (error) {
 		next(error);

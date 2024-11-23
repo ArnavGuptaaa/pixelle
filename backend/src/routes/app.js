@@ -22,6 +22,7 @@ import {
 	unfollowUser,
 	likePost,
 	unlikePost,
+	deleteSinglePost,
 } from "../controllers/app.js";
 
 const appRouter = express.Router();
@@ -40,7 +41,10 @@ appRouter.get("/users/:userId", isAuthenticated, fetchUserProfile);
 
 appRouter.get("/feed", isAuthenticated, fetchFeedPosts);
 
-appRouter.get("/posts/:id", isAuthenticated, fetchSinglePost);
+appRouter
+	.route("/posts/:id")
+	.get(isAuthenticated, fetchSinglePost)
+	.delete(isAuthenticated, deleteSinglePost);
 
 appRouter.post(
 	"/comment",

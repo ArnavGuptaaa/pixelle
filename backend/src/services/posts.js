@@ -1,7 +1,11 @@
 // Custom rrror
 import ErrorResponse from "../utils/ErrorResponse.js";
 import dotenv from "dotenv";
-import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+	DeleteObjectCommand,
+	GetObjectCommand,
+	PutObjectCommand,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3 from "../config/s3.js";
 import bcrypt from "bcrypt";
@@ -364,5 +368,68 @@ export const decrementLikeCount = async (postId) => {
 			.where(eq(posts.id, postId));
 	} catch (error) {
 		throw new ErrorResponse(500, "Failed to decrement like count on post");
+	}
+};
+
+/**
+ * Gets post record from DB
+ *
+ * @function getPostRecord
+ * @param {String} postId
+ * @returns {Promise<Object>} return post_id and user_id of post, if found
+ */
+export const getPostRecord = async (postId) => {
+	try {
+		const postRecord = await db
+			.select({
+				id: posts.id,
+				userId: posts.user_id,
+				imageUrl: posts.image_url,
+			})
+			.from(posts)
+			.where(eq(posts.id, postId))
+			.limit(1);
+
+		return postRecord[0];
+	} catch (error) {
+		throw new ErrorResponse(500, "Failed to fetch post record");
+	}
+};
+
+/**
+ * Delete post record from DB and Image From S3
+ *
+ * @function deletePostRecord
+ * @param {Object} postRecord
+ */
+export const deletePostRecord = async (postRecord) => {
+	try {
+		const postRecordClone = postRecord;
+
+		await db.delete(posts).where(eq(posts.id, postRecord.id));
+
+		await deleteImageFromS3(postRecordClone);
+	} catch (error) {
+		throw new ErrorResponse(500, "Failed to delete post record");
+	}
+};
+
+/**
+ * delete image from S3
+ *
+ * @function deleteImageFromS3
+ * @param {Promise<Object>} postRecord
+ */
+export const deleteImageFromS3 = async (postRecord) => {
+	try {
+		// Delete Logic
+		const command = new DeleteObjectCommand({
+			Bucket: S3_BUCKET_NAME,
+			Key: postRecord.imageUrl,
+		});
+
+		await s3.send(command);
+	} catch (error) {
+		throw new ErrorResponse(500, "Failed to delete image from S3");
 	}
 };
