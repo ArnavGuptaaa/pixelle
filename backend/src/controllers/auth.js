@@ -7,6 +7,7 @@ import {
 	fetchUserWithUsername,
 	verifyPassword,
 } from "../services/auth.js";
+import { sendWelcomeEmail } from "../utils/automatedEmail.js";
 
 import ErrorResponse from "../utils/ErrorResponse.js";
 
@@ -47,6 +48,9 @@ const registerUser = async (req, res, next) => {
 			id: createdUser.id,
 			username: req.body.username,
 		});
+
+		// Send Welcome Email
+		await sendWelcomeEmail(req.body.username, req.body.email);
 
 		// Return response
 		return res.json({

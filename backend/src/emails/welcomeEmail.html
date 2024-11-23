@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Welcome to Pixelle</title>
+		<style>
+			:root {
+				--background: hsl(0, 0%, 100%);
+				--foreground: hsl(240, 10%, 3.9%);
+				--card: hsl(0, 0%, 100%);
+				--card-foreground: hsl(240, 10%, 3.9%);
+				--primary: hsl(240, 5.9%, 10%);
+				--primary-foreground: hsl(0, 0%, 98%);
+				--border: hsl(240, 5.9%, 90%);
+				--primary-link: hsl(240, 5.9%, 10%);
+			}
+
+			body {
+				font-family: "Inter", sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: var(--background);
+				color: var(--foreground);
+			}
+
+			.container {
+				max-width: 600px;
+				margin: 40px auto;
+				background: var(--card);
+				padding: 24px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				color: var(--card-foreground);
+			}
+
+			.header {
+				text-align: center;
+				padding-bottom: 16px;
+				border-bottom: 1px solid var(--border);
+			}
+
+			.header h1 {
+				font-size: 24px;
+				color: var(--primary);
+				margin: 0;
+			}
+
+			.content {
+				padding-top: 16px;
+				line-height: 1.75;
+				font-size: 16px;
+			}
+
+			.footer {
+				margin-top: 24px;
+				text-align: center;
+				font-size: 14px;
+				color: var(--primary-foreground);
+			}
+
+			.footer a {
+				color: var(--primary-link);
+				text-decoration: underline;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>Welcome to Pixelle!</h1>
+			</div>
+			<div class="content">
+				<p>Hi <strong>@{{username}}</strong>,</p>
+				<p>
+					We're absolutely delighted to welcome you to
+					<strong>Pixelle</strong>—a vibrant community of
+					photographers, creators, and photo enthusiasts just like
+					you!
+				</p>
+				<p>
+					With Pixelle, you can share your moments, explore
+					breathtaking photos from others, and build connections with
+					creators worldwide. We can't wait to see the magic you
+					create!
+				</p>
+				<p>
+					Welcome to the Pixelle family—let's capture and share the
+					beauty of the world together!
+				</p>
+				<p>Warm regards,</p>
+				<p><strong>The Pixelle Team</strong></p>
+			</div>
+			<div class="footer">
+				<p>&copy; {{year}} Pixelle. All rights reserved.</p>
+				<p>
+					Developed with ♥️ by <strong>Nav.</strong>
+					<br />
+					<a href="https://github.com/ArnavGuptaaa" target="_blank"
+						>GitHub</a
+					>
+					|
+					<a
+						href="https://www.linkedin.com/in/arnavguptaa/"
+						target="_blank"
+						>LinkedIn</a
+					>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
