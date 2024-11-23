@@ -29,14 +29,14 @@ export const uploadImageToS3 = async (image) => {
 	try {
 		// Create unique image name
 		const imageExtension = image.originalname.split(".").at(-1);
-		const imageName = bcrypt.genSaltSync() + "." + imageExtension;
+		const imageName = crypto.randomUUID() + "." + imageExtension;
 
 		// Upload Logic
 		const command = new PutObjectCommand({
 			Bucket: S3_BUCKET_NAME,
 			Key: imageName,
 			Body: image.buffer,
-			ContactType: image.mimetype,
+			ContentType: image.mimetype,
 		});
 
 		await s3.send(command);
