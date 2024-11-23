@@ -100,3 +100,19 @@ export const unlikePost = async (likeData) => {
 		);
 	}
 };
+
+export const deletePost = async (postId) => {
+	const DELETE_POST_URL = `${BASE_URL}/app/posts/${postId}`;
+
+	try {
+		const response = await axios.delete(DELETE_POST_URL);
+
+		return response.data;
+	} catch (error) {
+		console.log(error);
+
+		throw new Error(
+			error.response?.data?.message || "Failed to delete post"
+		);
+	}
+};
