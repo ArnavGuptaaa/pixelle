@@ -11,8 +11,8 @@ import FeedCard from "@/components/FeedCard";
 import { useEffect, useState } from "react";
 
 // Icons
-import { LoaderPinwheel } from "lucide-react";
 import useFetch from "@/hooks/useFetch";
+import FeedSkeleton from "@/components/skeletons/feedSkeleton";
 
 const HomeFeed = () => {
 	const [data, error, isLoading] = useFetch(
@@ -37,24 +37,17 @@ const HomeFeed = () => {
 				</p>
 			</div>
 
-			{/* flex flex-wrap justify-evenly items-start gap-y-5 */}
-			{posts && (
+			{!isLoading && (
 				<div className="columns-2 md:columns-3 lg:columns-5 gap-3 mt-5">
 					<div>
-						{posts.map((post) => (
-							<FeedCard post={post} key={post.id} />
-						))}
+						{posts &&
+							posts.map((post) => (
+								<FeedCard post={post} key={post.id} />
+							))}
 					</div>
 				</div>
 			)}
-			{isLoading && (
-				<div className=" w-full">
-					<LoaderPinwheel
-						className="animate-spin mx-auto"
-						size={20}
-					/>
-				</div>
-			)}
+			{!posts && <FeedSkeleton count={20} />}
 		</div>
 	);
 };
