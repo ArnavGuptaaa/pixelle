@@ -17,6 +17,8 @@ import { followUser, unFollowUser } from "@/services/AppService";
 import { useAuth } from "@/hooks/useAuth";
 
 import useFetch from "@/hooks/useFetch";
+import UserSkelton from "@/components/skeletons/UserSkelton";
+import FeedSkeleton from "@/components/skeletons/feedSkeleton";
 
 const User = () => {
 	const USER_PAGE_ICON_SIZE = 15;
@@ -69,7 +71,8 @@ const User = () => {
 	return (
 		<div className="w-full md:flex flex-col h-screen max-w-screen-xl mx-auto md:w-5/6">
 			{/* User Info */}
-			{profileUser && (
+			{!profileUser && <UserSkelton />}
+			{!isLoading && profileUser && (
 				<div className="h-1/4 w-full justify-center md:justify-start items-center flex">
 					<Avatar className="w-24 h-24 md:w-28 md:h-28">
 						<AvatarImage src={profileUser.avatarUrl} />
@@ -130,7 +133,7 @@ const User = () => {
 
 				<div className="mt-5 columns-2 md:columns-3 lg:columns-5 gap-3">
 					{/* flex flex-wrap justify-evenly items-start gap-y-5 */}
-					{posts && (
+					{!isLoading && posts && (
 						<div>
 							{posts.map((post) => (
 								<FeedCard post={post} key={post.id} />
@@ -138,6 +141,7 @@ const User = () => {
 						</div>
 					)}
 				</div>
+				{!posts && <FeedSkeleton count={15} />}
 			</div>
 		</div>
 	);
