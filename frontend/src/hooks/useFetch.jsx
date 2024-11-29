@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
 const useFetch = (
 	endpoint,
 	requestOptions = {},
@@ -12,6 +15,8 @@ const useFetch = (
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 	const [data, setData] = useState();
+
+	const { toast } = useToast();
 
 	useEffect(() => {
 		const source = axios.CancelToken.source();
@@ -37,6 +42,12 @@ const useFetch = (
 							error.message ||
 							fallbackErrorMessage
 					);
+
+					toast({
+						className: cn("hidden md:block"),
+						variant: "destructive",
+						title: fallbackErrorMessage,
+					});
 				}
 			} finally {
 				setIsLoading(false);
