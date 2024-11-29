@@ -130,6 +130,14 @@ export const fetchUserProfile = async (req, res, next) => {
 		// Fetch user from ID
 		let userData = await getUser(req.params.userId);
 
+		// Return error if user does NOT exist
+		if (!userData) {
+			return res.status(404).json({
+				success: false,
+				message: "User does not exist",
+			});
+		}
+
 		// Fetch Post for given user
 		const profilePosts = await getUserPosts(req.params.userId);
 
@@ -138,6 +146,7 @@ export const fetchUserProfile = async (req, res, next) => {
 			req.user.id,
 			req.params.userId
 		);
+
 		return res.status(200).json({
 			success: true,
 			user: userData,

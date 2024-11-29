@@ -7,6 +7,9 @@ import {
 	verifyTokenService,
 } from "../services/AuthService";
 
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -15,6 +18,7 @@ export const AuthProvider = ({ children }) => {
 	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
+	const { toast } = useToast();
 
 	const login = async (userCredentials) => {
 		setLoading(true);
@@ -30,6 +34,14 @@ export const AuthProvider = ({ children }) => {
 
 			setUser(userDetails);
 			localStorage.setItem("token", response.accessToken);
+
+			toast({
+				className: cn("hidden md:block"),
+				variant: "success",
+				title: "Login Successful",
+				description: "Good to see you back!",
+			});
+
 			navigate("/", { replace: true });
 		} catch (error) {
 			console.log("Login Failed : ", error.message);
@@ -54,6 +66,13 @@ export const AuthProvider = ({ children }) => {
 
 			setUser(userDetails);
 			localStorage.setItem("token", response.accessToken);
+
+			toast({
+				className: cn("hidden sm:block"),
+				variant: "success",
+				title: "User Registration Successful",
+				description: "Welcome to Pixelle!",
+			});
 
 			navigate("/", { replace: true });
 		} catch (error) {

@@ -13,12 +13,22 @@ import { Button } from "@/components/ui/button";
 import { deletePost } from "@/services/AppService";
 import { useNavigate } from "react-router-dom";
 
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
 const PostSubMenu = ({ postId }) => {
 	const navigate = useNavigate();
+	const { toast } = useToast();
 
 	const handleDelete = async () => {
 		try {
 			await deletePost(postId);
+
+			toast({
+				className: cn("hidden md:block"),
+				variant: "success",
+				title: "Post Deleted",
+			});
 
 			navigate(-1, { replace: true });
 		} catch (error) {

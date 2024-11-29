@@ -9,12 +9,17 @@ import { useState } from "react";
 import { createPostService } from "@/services/AppService";
 import { useNavigate } from "react-router-dom";
 
+import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
 const CreatePost = () => {
 	const [preview, setPreview] = useState();
 	const [uploadedImage, setUploadedImage] = useState();
 	const [caption, setCaption] = useState("");
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
+
+	const { toast } = useToast();
 
 	const navigate = useNavigate();
 
@@ -47,6 +52,12 @@ const CreatePost = () => {
 
 		try {
 			await createPostService(formDataPayload);
+
+			toast({
+				className: cn("hidden md:block"),
+				variant: "success",
+				title: "Post Successfully Created",
+			});
 
 			navigate("/");
 		} catch (error) {
