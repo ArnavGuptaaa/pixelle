@@ -88,9 +88,6 @@ export const AuthProvider = ({ children }) => {
 				username: response.user.username,
 			};
 
-			console.log("userdetails");
-			console.log(userDetails);
-
 			setUser(userDetails);
 		} catch (error) {
 			console.log("Failed to set user : ", error.message);

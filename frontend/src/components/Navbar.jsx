@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 // Icons
-import { Menu, CirclePlus, Search, House } from "lucide-react";
+import { Menu, CirclePlus, Search, House, Compass } from "lucide-react";
 
 // Components
 import AvatarSubMenu from "./AvatarSubMenu";
@@ -33,6 +33,10 @@ const Navbar = () => {
 					<NavLink to={"/"} className="flex items-center">
 						<House className="mr-2" size={NAVBAR_ICON_SIZE} />
 						Home
+					</NavLink>
+					<NavLink to={"/wander"} className="flex items-center">
+						<Compass className="mr-2" size={NAVBAR_ICON_SIZE} />
+						Wander
 					</NavLink>
 					<NavLink to={"/posts/create"} className="flex items-center">
 						<CirclePlus className="mr-2" size={NAVBAR_ICON_SIZE} />
@@ -58,6 +62,13 @@ const Navbar = () => {
 				>
 					<House className="mr-2" size={NAVBAR_ICON_SIZE} />
 					Home
+				</NavLink>
+				<NavLink
+					to={"/wander"}
+					className="flex items-center hover:bg-muted transition-all duration-150 ease-in-out p-3 rounded-sm"
+				>
+					<Compass className="mr-2" size={NAVBAR_ICON_SIZE} />
+					Wander
 				</NavLink>
 				<NavLink
 					to={"/posts/create"}

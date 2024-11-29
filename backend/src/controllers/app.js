@@ -2,7 +2,7 @@ import ErrorResponse from "../utils/ErrorResponse.js";
 import {
 	uploadImageToS3,
 	createPostRecord,
-	getFeedPosts,
+	getWanderPosts,
 	getSinglePost,
 	getUserPosts,
 	getPostComments,
@@ -14,6 +14,7 @@ import {
 	deletePostRecord,
 	getCommentFromId,
 	deleteCommentFromId,
+	getFeedPosts,
 } from "../services/posts.js";
 import {
 	doesFollowExist,
@@ -50,6 +51,27 @@ export const createPost = async (req, res, next) => {
 	}
 };
 
+export const fetchWanderPosts = async (req, res, next) => {
+	try {
+		// This route is expected to have query param : page
+		// converting that to 0 index'ed page
+		const page =
+			req.query.page && req.query.page > 0 ? req.query.page - 1 : 0;
+		const offset = page * 30;
+
+		// fetch all posts sorted descending limit 30
+		const wanderPosts = await getWanderPosts(offset);
+
+		// return posts
+		return res.status(200).json({
+			success: true,
+			posts: wanderPosts,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 export const fetchFeedPosts = async (req, res, next) => {
 	try {
 		// This route is expected to have query param : page
@@ -59,7 +81,7 @@ export const fetchFeedPosts = async (req, res, next) => {
 		const offset = page * 30;
 
 		// fetch all posts sorted descending limit 30
-		const feedPosts = await getFeedPosts(offset);
+		const feedPosts = await getFeedPosts(offset, req.user.id);
 
 		// return posts
 		return res.status(200).json({
@@ -82,8 +104,6 @@ export const fetchSinglePost = async (req, res, next) => {
 
 		// Check if post is liked by the given user
 		const existingLike = await getExistingLike(req.user.id, req.params.id);
-		console.log(existingLike);
-		console.log(!!existingLike);
 
 		post.isLiked = !!existingLike;
 
@@ -250,7 +270,7 @@ export const unfollowUser = async (req, res, next) => {
 export const likePost = async (req, res, next) => {
 	try {
 		// This route expects a postId
-		console.log(req.body.postId);
+		// console.log(req.body.postId);
 
 		// check if like already exists exists
 		const existingLike = await getExistingLike(
@@ -288,7 +308,7 @@ export const likePost = async (req, res, next) => {
 export const unlikePost = async (req, res, next) => {
 	try {
 		// This route expects a postId
-		console.log(req.body.postId);
+		// console.log(req.body.postId);
 
 		// check if like already exists exists
 		const existingLike = await getExistingLike(

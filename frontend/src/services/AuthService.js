@@ -8,7 +8,6 @@ export const loginService = async (userCredentials) => {
 	try {
 		const response = await axios.post(LOGIN_URL, userCredentials);
 
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		throw new Error(error.response?.data?.message || "User login failed");
@@ -21,7 +20,6 @@ export const registerService = async (userCredentials) => {
 	try {
 		const response = await axios.post(REGISTER_URL, userCredentials);
 
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		throw new Error(

@@ -12,7 +12,8 @@ import bcrypt from "bcrypt";
 
 import db from "../db/index.js";
 import { comments, likes, posts, users } from "../db/schema.js";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
+import { getFollowedUserIdArray } from "./users.js";
 
 // Load environment variables
 dotenv.config({ path: "./src/config/.env" });
@@ -70,14 +71,69 @@ export const createPostRecord = async (postData) => {
 };
 
 /**
- * Get all posts for feed from DB
+ * Get all posts for wander from DB
+ *
+ * @function getWanderPosts
+ * @param {Object} offset
+ * @returns {Promise<Object>} returns posts from DB
+ */
+export const getWanderPosts = async (offset) => {
+	try {
+		let wanderPosts = await db
+			.select({
+				id: posts.id,
+				imageUrl: posts.image_url,
+				caption: posts.caption,
+				likes: posts.likes,
+				userId: posts.user_id,
+				username: users.username,
+			})
+			.from(posts)
+			.innerJoin(users, eq(posts.user_id, users.id))
+			.orderBy(sql`${posts.created_at} DESC`)
+			.offset(offset)
+			.limit(30);
+
+		// Replace image_url with signed image URL
+		for (let post of wanderPosts) {
+			const command = new GetObjectCommand({
+				Bucket: S3_BUCKET_NAME,
+				Key: post.imageUrl,
+			});
+
+			const s3SignedImageUrl = await getSignedUrl(s3, command, {
+				expiresIn: 3600,
+			});
+
+			post.imageUrl = s3SignedImageUrl;
+		}
+
+		return wanderPosts;
+	} catch (error) {
+		console.log(error);
+
+		throw new ErrorResponse(500, "Failed to fetch wander posts");
+	}
+};
+
+/**
+ * Get all posts for home feed from DB
  *
  * @function getFeedPosts
  * @param {Object} offset
  * @returns {Promise<Object>} returns posts from DB
  */
-export const getFeedPosts = async (offset) => {
+export const getFeedPosts = async (offset, userId) => {
 	try {
+		const followedUserIds = await getFollowedUserIdArray(userId);
+
+		if (
+			!followedUserIds ||
+			(followedUserIds && followedUserIds.length === 0)
+		) {
+			return [];
+		}
+
 		let feedPosts = await db
 			.select({
 				id: posts.id,
@@ -89,6 +145,7 @@ export const getFeedPosts = async (offset) => {
 			})
 			.from(posts)
 			.innerJoin(users, eq(posts.user_id, users.id))
+			.where(inArray(posts.user_id, followedUserIds))
 			.orderBy(sql`${posts.created_at} DESC`)
 			.offset(offset)
 			.limit(30);
@@ -111,7 +168,7 @@ export const getFeedPosts = async (offset) => {
 	} catch (error) {
 		console.log(error);
 
-		throw new ErrorResponse(500, "Failed to fetch feed posts");
+		throw new ErrorResponse(500, "Failed to fetch home feed posts");
 	}
 };
 
@@ -161,7 +218,7 @@ export const getSinglePost = async (postId) => {
 	} catch (error) {
 		console.log(error);
 
-		throw new ErrorResponse(500, "Failed to fetch feed posts");
+		throw new ErrorResponse(500, "Failed to fetch wander posts");
 	}
 };
 
@@ -207,7 +264,7 @@ export const getUserPosts = async (userId) => {
 	} catch (error) {
 		console.log(error);
 
-		throw new ErrorResponse(500, "Failed to fetch feed posts");
+		throw new ErrorResponse(500, "Failed to fetch user posts");
 	}
 };
 
