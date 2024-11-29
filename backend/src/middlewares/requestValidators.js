@@ -53,6 +53,24 @@ export const validateCommentRequest = (req, res, next) => {
 	next();
 };
 
+export const validateDeleteCommentRequest = (req, res, next) => {
+	let errors = [];
+
+	const { commentId } = req.body;
+
+	if (!commentId) {
+		errors.push({ field: "commentId", message: "Comment Id is required" });
+	}
+
+	if (errors.length > 0) {
+		return res.status(400).json({
+			success: false,
+			errors,
+		});
+	}
+
+	next();
+};
 export const validateUserRequest = (req, res, next) => {
 	let errors = [];
 

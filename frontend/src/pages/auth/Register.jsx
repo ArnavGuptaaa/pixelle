@@ -110,6 +110,8 @@ const Register = () => {
 						/>
 					</div>
 
+					{/* TODO: Add a 'Confirm Password' input field */}
+
 					<Button className="w-full" onClick={handleRegister}>
 						{loading && (
 							<LoaderPinwheel

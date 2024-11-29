@@ -12,6 +12,8 @@ import {
 	deleteLikeRecord,
 	getPostRecord,
 	deletePostRecord,
+	getCommentFromId,
+	deleteCommentFromId,
 } from "../services/posts.js";
 import {
 	doesFollowExist,
@@ -60,7 +62,7 @@ export const fetchFeedPosts = async (req, res, next) => {
 		const feedPosts = await getFeedPosts(offset);
 
 		// return posts
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			posts: feedPosts,
 		});
@@ -89,7 +91,7 @@ export const fetchSinglePost = async (req, res, next) => {
 		const comments = await getPostComments(req.params.id);
 
 		// return posts
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			post,
 			comments,
@@ -116,7 +118,7 @@ export const fetchUserProfile = async (req, res, next) => {
 			req.user.id,
 			req.params.userId
 		);
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			user: userData,
 			posts: profilePosts,
@@ -141,9 +143,45 @@ export const postComment = async (req, res, next) => {
 		// create a comment record
 		const createdComment = await createCommentRecord(commentData);
 
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			message: "Comment posted successfully",
+			commentId: createdComment.id,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const deleteComment = async (req, res, next) => {
+	try {
+		// Check if comment exists
+		const commentRecord = await getCommentFromId(req.body.commentId);
+
+		// If it does not, then return success
+		if (!commentRecord) {
+			return res.status(200).json({
+				success: true,
+				message: "Comment deleted successfully",
+			});
+		}
+
+		// Check if user issuing delete is the author of comment
+		if (req.user.id !== commentRecord.userId) {
+			return res.status(400).json({
+				success: true,
+				message:
+					"Comment does not belong to user attempting to delete it",
+			});
+		}
+
+		// If it does, then delete comment from DB
+		await deleteCommentFromId(req.body.commentId);
+
+		// return success response
+		return res.status(200).json({
+			success: true,
+			message: "Comment deleted successfully",
 		});
 	} catch (error) {
 		next(error);
@@ -176,7 +214,7 @@ export const followUser = async (req, res, next) => {
 		// If not, then create a follow record in DB
 		const followRecord = await createFollowRecord(followerData);
 
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			message: "User followed",
 		});
@@ -200,7 +238,7 @@ export const unfollowUser = async (req, res, next) => {
 
 		await deleteFollowRecord(req.user.id, req.body.followingId);
 
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			message: "User unfollowed",
 		});

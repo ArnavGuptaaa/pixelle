@@ -7,6 +7,7 @@ import isAuthenticated from "../middlewares/isAuthenicated.js";
 import {
 	validateCreateRequest,
 	validateCommentRequest,
+	validateDeleteCommentRequest,
 	validateFollowRequest,
 	validateLikeRequest,
 } from "../middlewares/requestValidators.js";
@@ -23,6 +24,7 @@ import {
 	likePost,
 	unlikePost,
 	deleteSinglePost,
+	deleteComment,
 } from "../controllers/app.js";
 
 const appRouter = express.Router();
@@ -46,12 +48,10 @@ appRouter
 	.get(isAuthenticated, fetchSinglePost)
 	.delete(isAuthenticated, deleteSinglePost);
 
-appRouter.post(
-	"/comment",
-	isAuthenticated,
-	validateCommentRequest,
-	postComment
-);
+appRouter
+	.route("/comment")
+	.post(isAuthenticated, validateCommentRequest, postComment)
+	.delete(isAuthenticated, validateDeleteCommentRequest, deleteComment);
 
 appRouter
 	.route("/follow")

@@ -52,16 +52,16 @@ const Post = () => {
 			content: trimmedComment,
 		};
 
-		// TODO: Add Profile picture link
-		const localComment = {
-			id: Math.random() * (99999 - 9999) + 9999,
-			userId: user?.id,
-			username: user?.username,
-			content: trimmedComment,
-		};
-
 		try {
 			const response = await postComment(commentPayload);
+
+			// TODO: Add Profile picture link
+			const localComment = {
+				id: response.commentId,
+				userId: user?.id,
+				username: user?.username,
+				content: trimmedComment,
+			};
 
 			// Optimistic update for comments
 			setComments((prevData) => {
@@ -91,7 +91,11 @@ const Post = () => {
 				<div className="overflow-scroll h-screen">
 					{comments &&
 						comments.map((comment) => (
-							<Comment comment={comment} key={comment.id} />
+							<Comment
+								comment={comment}
+								setComments={setComments}
+								key={comment.id}
+							/>
 						))}
 				</div>
 				<div className="sticky bottom-5 flex w-full items-center space-x-2">

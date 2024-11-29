@@ -261,6 +261,49 @@ export const createCommentRecord = async (commentData) => {
 };
 
 /**
+ * Get comment from a specific ID
+ *
+ * @function getCommentFromId
+ * @param {String} commentId
+ * @returns {Promise<Object>} returns comment
+ */
+export const getCommentFromId = async (commentId) => {
+	try {
+		let commentResult = await db
+			.select({
+				id: comments.id,
+				content: comments.comment,
+				userId: comments.user_id,
+			})
+			.from(comments)
+			.where(eq(comments.id, commentId))
+			.limit(1);
+
+		return commentResult[0];
+	} catch (error) {
+		console.log(error);
+
+		throw new ErrorResponse(500, "Failed to fetch single comment");
+	}
+};
+
+/**
+ * Delete comment of a given ID
+ *
+ * @function deleteComment
+ * @param {String} commentId
+ */
+export const deleteCommentFromId = async (commentId) => {
+	try {
+		await db.delete(comments).where(eq(comments.id, commentId));
+	} catch (error) {
+		console.log(error);
+
+		throw new ErrorResponse(500, "Failed to delete comment");
+	}
+};
+
+/**
  * Fetches existing like for a given post by a user
  *
  * @function getExistingLike

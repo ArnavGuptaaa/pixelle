@@ -116,3 +116,23 @@ export const deletePost = async (postId) => {
 		);
 	}
 };
+
+export const deleteComment = async (commentData) => {
+	const DELETE_COMMENT_URL = `${BASE_URL}/app/comment/`;
+
+	const requestOptions = {
+		data: commentData,
+	};
+
+	try {
+		const response = await axios.delete(DELETE_COMMENT_URL, requestOptions);
+
+		return response.data;
+	} catch (error) {
+		console.log(error);
+
+		throw new Error(
+			error.response?.data?.message || "Failed to delete comment"
+		);
+	}
+};
