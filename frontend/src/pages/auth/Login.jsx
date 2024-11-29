@@ -36,8 +36,6 @@ const Login = () => {
 			password,
 		};
 
-		console.log(userCredentials);
-
 		await login(userCredentials);
 	};
 

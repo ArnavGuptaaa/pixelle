@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import FeedSkeleton from "@/components/skeletons/feedSkeleton";
 
-const HomeFeed = () => {
+const WanderFeed = () => {
 	const [data, error, isLoading] = useFetch(
-		"/app/feed",
+		"/app/wander",
 		{},
 		[],
 		"Failed to fetch posts"
@@ -23,9 +23,9 @@ const HomeFeed = () => {
 	return (
 		<div className="w-full mx-auto md:w-5/6  max-w-screen-xl ">
 			<div className="text-center md:text-left">
-				<h1 className="text-3xl md:text-5xl font-bold">Home</h1>
+				<h1 className="text-3xl md:text-5xl font-bold">Wander!</h1>
 				<p className="text-gray-500 capitalize mt-2">
-					See the world through the lens of those you follow.
+					Discover content tailored just for you
 				</p>
 			</div>
 
@@ -44,4 +44,4 @@ const HomeFeed = () => {
 	);
 };
 
-export default HomeFeed;
+export default WanderFeed;

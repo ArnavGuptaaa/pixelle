@@ -158,3 +158,25 @@ export const decrementFollowCount = async (userId) => {
 		throw new ErrorResponse(500, "Failed to update follow count on user");
 	}
 };
+
+/**
+ * Fetch userID array of all the users followed by given user
+ *
+ * @function getFollowedUserIdArray
+ * @param {number} userId
+ * @returns {Promise<number[]>}
+ */
+export const getFollowedUserIdArray = async (userId) => {
+	try {
+		const followingIds = await db
+			.select({ followingId: follows.following_user_id })
+			.from(follows)
+			.where(eq(follows.follower_user_id, userId));
+
+		return followingIds.map((user) => user.followingId);
+	} catch (error) {
+		console.log(error);
+
+		throw new ErrorResponse(500, "Failed to fetch followed users");
+	}
+};

@@ -14,8 +14,6 @@ import { deletePost } from "@/services/AppService";
 import { useNavigate } from "react-router-dom";
 
 const PostSubMenu = ({ postId }) => {
-	console.log(`postIDD : ${postId}`);
-
 	const navigate = useNavigate();
 
 	const handleDelete = async () => {

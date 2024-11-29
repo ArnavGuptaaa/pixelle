@@ -15,6 +15,7 @@ import {
 // Controller
 import {
 	createPost,
+	fetchWanderPosts,
 	fetchFeedPosts,
 	fetchSinglePost,
 	fetchUserProfile,
@@ -40,6 +41,8 @@ appRouter.post(
 );
 
 appRouter.get("/users/:userId", isAuthenticated, fetchUserProfile);
+
+appRouter.get("/wander", isAuthenticated, fetchWanderPosts);
 
 appRouter.get("/feed", isAuthenticated, fetchFeedPosts);
 
