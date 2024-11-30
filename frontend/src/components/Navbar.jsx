@@ -8,16 +8,28 @@ TODO:
 import { NavLink } from "react-router-dom";
 
 // ShadCN
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+	Sheet,
+	SheetContent,
+	SheetTrigger,
+	SheetClose,
+} from "@/components/ui/sheet";
 
 // Icons
 import { Menu, CirclePlus, Search, House, Compass } from "lucide-react";
 
 // Components
 import AvatarSubMenu from "./AvatarSubMenu";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
 	const NAVBAR_ICON_SIZE = 15;
+
+	const handleSheetClose = () => {
+		const closeButton = document.querySelector("#sheet-close");
+
+		closeButton.click();
+	};
 
 	return (
 		<nav className="flex items-center justify-between border border-b-1 px-5 py-2 fixed top-0 w-full bg-background z-50">
@@ -29,6 +41,7 @@ const Navbar = () => {
 				<SheetContent
 					side={"left"}
 					className="flex flex-col justify-start items-left mt-5"
+					onClick={handleSheetClose}
 				>
 					<NavLink to={"/"} className="flex items-center">
 						<House className="mr-2" size={NAVBAR_ICON_SIZE} />
@@ -47,6 +60,12 @@ const Navbar = () => {
 						Search Users
 					</NavLink>
 				</SheetContent>
+				{/* Hidden button which will be programatically clicked to close sheet */}
+				<SheetClose>
+					<Button id="sheet-close" className="hidden">
+						Close Sheet
+					</Button>
+				</SheetClose>
 			</Sheet>
 
 			<div className="hidden md:block">
