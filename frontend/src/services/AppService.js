@@ -34,7 +34,7 @@ export const postComment = async (commentData) => {
 		return response.data;
 	} catch (error) {
 		throw new Error(
-			error.response?.data?.message || "Failed to fetch profile"
+			error.response?.data?.message || "Failed to post comment"
 		);
 	}
 };
@@ -133,6 +133,24 @@ export const deleteComment = async (commentData) => {
 
 		throw new Error(
 			error.response?.data?.message || "Failed to delete comment"
+		);
+	}
+};
+
+export const getSearchResults = async (searchText) => {
+	const SEARCH_USERS_URL = `${BASE_URL}/app/search?q=${encodeURIComponent(
+		searchText
+	)}`;
+
+	try {
+		const response = await axios.get(SEARCH_USERS_URL);
+
+		return response.data;
+	} catch (error) {
+		console.log(error);
+
+		throw new Error(
+			error.response?.data?.message || "Failed to fetch search results"
 		);
 	}
 };

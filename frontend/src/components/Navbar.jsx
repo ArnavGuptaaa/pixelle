@@ -55,16 +55,14 @@ const Navbar = () => {
 						<CirclePlus className="mr-2" size={NAVBAR_ICON_SIZE} />
 						Create Post
 					</NavLink>
-					<NavLink className="flex items-center">
+					<NavLink to={"/search"} className="flex items-center">
 						<Search className="mr-2" size={NAVBAR_ICON_SIZE} />
 						Search Users
 					</NavLink>
 				</SheetContent>
 				{/* Hidden button which will be programatically clicked to close sheet */}
-				<SheetClose>
-					<Button id="sheet-close" className="hidden">
-						Close Sheet
-					</Button>
+				<SheetClose className="hidden">
+					<Button id="sheet-close">Close Sheet</Button>
 				</SheetClose>
 			</Sheet>
 
@@ -96,7 +94,10 @@ const Navbar = () => {
 					<CirclePlus className="mr-2" size={NAVBAR_ICON_SIZE} />
 					Create
 				</NavLink>
-				<NavLink className="flex items-center hover:bg-muted transition-all duration-150 ease-in-out p-3 rounded-sm">
+				<NavLink
+					to={"/search"}
+					className="flex items-center hover:bg-muted transition-all duration-150 ease-in-out p-3 rounded-sm"
+				>
 					<Search className="mr-2" size={NAVBAR_ICON_SIZE} />
 					Search
 				</NavLink>

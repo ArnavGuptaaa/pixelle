@@ -21,6 +21,7 @@ import {
 	createFollowRecord,
 	deleteFollowRecord,
 	getUser,
+	getUserSearchResults,
 } from "../services/users.js";
 import { longtext } from "drizzle-orm/mysql-core";
 
@@ -373,6 +374,23 @@ export const deleteSinglePost = async (req, res, next) => {
 		return res.status(200).json({
 			success: true,
 			message: "Post deleted",
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const fetchUserSearchResults = async (req, res, next) => {
+	try {
+		// This route expects a query parameter
+		// console.log(req.query.q);
+
+		// Get all users search results
+		const userSearchResults = await getUserSearchResults(req.query.q);
+
+		return res.status(200).json({
+			success: true,
+			results: userSearchResults,
 		});
 	} catch (error) {
 		next(error);

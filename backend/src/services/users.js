@@ -2,7 +2,7 @@ import ErrorResponse from "../utils/ErrorResponse.js";
 
 import db from "../db/index.js";
 import { follows, users } from "../db/schema.js";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, like, sql } from "drizzle-orm";
 
 /**
  * Fetches all information and posts about user
@@ -178,5 +178,31 @@ export const getFollowedUserIdArray = async (userId) => {
 		console.log(error);
 
 		throw new ErrorResponse(500, "Failed to fetch followed users");
+	}
+};
+
+/**
+ * Fetch user search results matching a given string
+ *
+ * @function getUserSearchResults
+ * @param {String} likeString
+ * @returns {Promise<Object[]>}
+ */
+export const getUserSearchResults = async (likeString) => {
+	try {
+		const searchResults = await db
+			.select({
+				id: users.id,
+				username: users.username,
+				followers: users.follower_count,
+			})
+			.from(users)
+			.where(like(users.username, `%${likeString}%`));
+
+		return searchResults;
+	} catch (error) {
+		console.log(error);
+
+		throw new ErrorResponse(500, "Failed to fetch user search results");
 	}
 };
