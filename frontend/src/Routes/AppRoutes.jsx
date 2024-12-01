@@ -13,6 +13,7 @@ import UserSearch from "@/pages/app/UserSearch";
 import CreatePost from "@/pages/app/CreatePost";
 import Post from "@/pages/app/Post";
 import WanderFeed from "@/pages/app/WanderFeed";
+import SearchUsers from "@/pages/app/SearchUsers";
 
 const AppRoutes = () => {
 	return (
@@ -38,6 +39,10 @@ const AppRoutes = () => {
 
 				<Route path="wander">
 					<Route index element={<WanderFeed />} />
+				</Route>
+
+				<Route path="search">
+					<Route index element={<SearchUsers />} />
 				</Route>
 
 				<Route path="*" element={<NotFound />} />

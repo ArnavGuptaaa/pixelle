@@ -26,6 +26,7 @@ import {
 	unlikePost,
 	deleteSinglePost,
 	deleteComment,
+	fetchUserSearchResults,
 } from "../controllers/app.js";
 
 const appRouter = express.Router();
@@ -45,6 +46,8 @@ appRouter.get("/users/:userId", isAuthenticated, fetchUserProfile);
 appRouter.get("/wander", isAuthenticated, fetchWanderPosts);
 
 appRouter.get("/feed", isAuthenticated, fetchFeedPosts);
+
+appRouter.get("/search", isAuthenticated, fetchUserSearchResults);
 
 appRouter
 	.route("/posts/:id")
