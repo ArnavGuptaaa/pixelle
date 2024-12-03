@@ -6,6 +6,7 @@ import { useState } from "react";
 import { likePost, unlikePost } from "@/services/AppService";
 import PostSubMenu from "./PostSubMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { useNotifications } from "@/hooks/useNotifications";
 
 const ImageCard = ({ post }) => {
 	const navigate = useNavigate();
@@ -13,21 +14,35 @@ const ImageCard = ({ post }) => {
 	const [isLiked, setIsLiked] = useState(post.isLiked);
 	const [likeCount, setLikeCount] = useState(post.likes);
 
+	const { sendLikeNotification } = useNotifications();
+
 	const handleLike = async () => {
 		const likePayload = {
 			postId: post.id,
 		};
 
-		if (isLiked) {
-			// if already liked, then we will unlike
+		try {
+			if (isLiked) {
+				// if already liked, then we will unlike
 
-			setLikeCount((prevData) => prevData - 1);
-			await unlikePost(likePayload);
-		} else {
-			// Else we like the post
+				setLikeCount((prevData) => prevData - 1);
+				await unlikePost(likePayload);
+			} else {
+				// Else like the post
 
-			setLikeCount((prevData) => prevData + 1);
-			await likePost(likePayload);
+				setLikeCount((prevData) => prevData + 1);
+				await likePost(likePayload);
+
+				// Send like notification event
+				sendLikeNotification(
+					user.id,
+					user.username,
+					post.id,
+					post.userId
+				);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 
 		setIsLiked((prevData) => !prevData);

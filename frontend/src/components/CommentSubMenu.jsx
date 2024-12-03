@@ -35,7 +35,7 @@ const CommentSubMenu = ({ commentId, setComments }) => {
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger>
+			<DropdownMenuTrigger asChild>
 				<Button
 					variant="outline"
 					size="icon"
