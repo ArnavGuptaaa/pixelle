@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { SendHorizontal } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import useFetch from "@/hooks/useFetch";
+import { useNotifications } from "@/hooks/useNotifications";
 
 const Post = () => {
 	const { postId } = useParams();
@@ -24,6 +25,7 @@ const Post = () => {
 	const [commentContent, setCommentContent] = useState("");
 
 	const { user } = useAuth();
+	const { sendCommentNotification } = useNotifications();
 
 	const [data, error, isLoading] = useFetch(
 		`/app/posts/${postId}`,
@@ -67,6 +69,14 @@ const Post = () => {
 			setComments((prevData) => {
 				return [localComment, ...prevData];
 			});
+
+			// Send comment notification event
+			sendCommentNotification(
+				user.id,
+				user.username,
+				post.id,
+				post.userId
+			);
 		} catch (error) {
 			console.log(error);
 		}

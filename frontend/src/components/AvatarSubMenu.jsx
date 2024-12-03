@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Icons
-import { LogOut, User, Moon, Sun } from "lucide-react";
+import { LogOut, User, Moon, Sun, Heart } from "lucide-react";
 
 // Theme Toggle
 import { useTheme } from "@/Context/ThemeProvider";
 import { useAuth } from "@/hooks/useAuth";
+import NotificationFeed from "./NotificationFeed";
 
 const AvatarSubMenu = () => {
 	const { user, logout } = useAuth();
@@ -38,39 +39,52 @@ const AvatarSubMenu = () => {
 	};
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger>
-				<Avatar className="cursor-pointer">
-					<AvatarImage src={"test"} />
-					<AvatarFallback>
-						{user?.username[0].toUpperCase()}
-					</AvatarFallback>
-				</Avatar>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuLabel>My Account</DropdownMenuLabel>
-				<DropdownMenuSeparator />
-				<NavLink to={`/users/${user?.id}`}>
-					<DropdownMenuItem>
-						<User className="inline-block mr-2 h-4 w-4" />
-						Profile
+		<div className="flex items-center">
+			{/* Notification Feed Dropdown */}
+			<DropdownMenu>
+				<DropdownMenuTrigger className="mr-5">
+					<Heart size={25} />
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<NotificationFeed />
+				</DropdownMenuContent>
+			</DropdownMenu>
+
+			{/* Avatar Dropdown */}
+			<DropdownMenu>
+				<DropdownMenuTrigger>
+					<Avatar className="cursor-pointer">
+						<AvatarImage src={"test"} />
+						<AvatarFallback>
+							{user?.username[0].toUpperCase()}
+						</AvatarFallback>
+					</Avatar>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent>
+					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuSeparator />
+					<NavLink to={`/users/${user?.id}`}>
+						<DropdownMenuItem>
+							<User className="inline-block mr-2 h-4 w-4" />
+							Profile
+						</DropdownMenuItem>
+					</NavLink>
+					<DropdownMenuItem onClick={handleThemeChange}>
+						{theme === "light" ? (
+							<Sun className="inline-block mr-2 h-4 w-4" />
+						) : (
+							<Moon className="inline-block mr-2 h-4 w-4" />
+						)}
+						Switch Theme
 					</DropdownMenuItem>
-				</NavLink>
-				<DropdownMenuItem onClick={handleThemeChange}>
-					{theme === "light" ? (
-						<Sun className="inline-block mr-2 h-4 w-4" />
-					) : (
-						<Moon className="inline-block mr-2 h-4 w-4" />
-					)}
-					Switch Theme
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={handleLogout}>
-					<LogOut className="inline-block mr-2 h-4 w-4" />
-					Logout
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem onClick={handleLogout}>
+						<LogOut className="inline-block mr-2 h-4 w-4" />
+						Logout
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+		</div>
 	);
 };
 

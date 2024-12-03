@@ -61,7 +61,7 @@ const Navbar = () => {
 					</NavLink>
 				</SheetContent>
 				{/* Hidden button which will be programatically clicked to close sheet */}
-				<SheetClose className="hidden">
+				<SheetClose className="hidden" asChild>
 					<Button id="sheet-close">Close Sheet</Button>
 				</SheetClose>
 			</Sheet>
