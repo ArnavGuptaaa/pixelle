@@ -13,7 +13,7 @@ const Notification = ({ notification }) => {
 					@{notification.actingUsername}
 				</NavLink>
 				&nbsp;
-				{notification.type === "like" ? "liked" : "commented on "}
+				{notification.type === "like" ? "liked " : "commented on "}
 				your &nbsp;
 				<NavLink
 					to={`/posts/${notification.postId}`}

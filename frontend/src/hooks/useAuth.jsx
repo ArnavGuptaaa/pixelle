@@ -1,4 +1,4 @@
-import { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -14,11 +14,16 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
+	const [token, setToken] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	const navigate = useNavigate();
 	const { toast } = useToast();
+
+	useEffect(() => {
+		setToken(localStorage.getItem("token"));
+	}, []);
 
 	const login = async (userCredentials) => {
 		setLoading(true);
@@ -34,6 +39,7 @@ export const AuthProvider = ({ children }) => {
 
 			setUser(userDetails);
 			localStorage.setItem("token", response.accessToken);
+			setToken(response.accessToken);
 
 			toast({
 				className: cn("hidden md:block"),
@@ -66,6 +72,7 @@ export const AuthProvider = ({ children }) => {
 
 			setUser(userDetails);
 			localStorage.setItem("token", response.accessToken);
+			setToken(response.accessToken);
 
 			toast({
 				className: cn("hidden sm:block"),
@@ -86,6 +93,7 @@ export const AuthProvider = ({ children }) => {
 
 	const logout = () => {
 		localStorage.removeItem("token");
+		setToken("");
 
 		setUser(null);
 
@@ -97,6 +105,7 @@ export const AuthProvider = ({ children }) => {
 		setError(null);
 
 		const token = localStorage.getItem("token");
+		setToken(token);
 
 		try {
 			const response = await verifyTokenService(token);
@@ -117,6 +126,7 @@ export const AuthProvider = ({ children }) => {
 
 	const value = {
 		user,
+		token,
 		login,
 		register,
 		logout,
