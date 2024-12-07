@@ -23,7 +23,6 @@ import {
 	getUser,
 	getUserSearchResults,
 } from "../services/users.js";
-import { longtext } from "drizzle-orm/mysql-core";
 
 export const createPost = async (req, res, next) => {
 	try {

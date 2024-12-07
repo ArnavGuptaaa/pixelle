@@ -1,5 +1,8 @@
-import { useNotifications } from "@/hooks/useNotifications";
+// Components
 import Notification from "./Notification";
+
+// Hooks
+import { useNotifications } from "@/hooks/useNotifications";
 
 const NotificationFeed = () => {
 	const { notifications } = useNotifications();

@@ -1,21 +1,22 @@
 // Custom rrror
 import ErrorResponse from "../utils/ErrorResponse.js";
-import dotenv from "dotenv";
+
+// S3
 import {
 	DeleteObjectCommand,
 	GetObjectCommand,
 	PutObjectCommand,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import s3 from "../config/s3.js";
-import bcrypt from "bcrypt";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 import db from "../db/index.js";
-import { comments, likes, posts, users } from "../db/schema.js";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { getFollowedUserIdArray } from "./users.js";
+import { comments, likes, posts, users } from "../db/schema.js";
 
 // Load environment variables
+import dotenv from "dotenv";
 dotenv.config({ path: "./src/config/.env" });
 
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;

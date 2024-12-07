@@ -1,19 +1,23 @@
-import { useLocation, useParams } from "react-router-dom";
-
-// Mock Data
-// import comments from "@/data/comments";
-import Comment from "@/components/Comment";
-import { useEffect, useState } from "react";
-import ImageCard from "@/components/ImageCard";
-import { postComment } from "@/services/AppService";
-
+// ShadCN
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+// Components
+import Comment from "@/components/Comment";
+import ImageCard from "@/components/ImageCard";
+
+// Icons
 import { SendHorizontal } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+
+// Hooks
 import useFetch from "@/hooks/useFetch";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useNotifications } from "@/hooks/useNotifications";
+
+// Services
+import { postComment } from "@/services/AppService";
 
 const Post = () => {
 	const { postId } = useParams();

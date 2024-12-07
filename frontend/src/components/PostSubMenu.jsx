@@ -1,19 +1,25 @@
-import { EllipsisVertical, Trash2 } from "lucide-react";
-
+// ShadCN
 import {
 	DropdownMenu,
-	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
+	DropdownMenuContent,
 	DropdownMenuTrigger,
+	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
 import { Button } from "@/components/ui/button";
-import { deletePost } from "@/services/AppService";
-import { useNavigate } from "react-router-dom";
 
+// Icons
+import { EllipsisVertical, Trash2 } from "lucide-react";
+
+// Hooks
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+
+// Services
+import { deletePost } from "@/services/AppService";
+
+// Other Imports
 import { cn } from "@/lib/utils";
 
 const PostSubMenu = ({ postId }) => {

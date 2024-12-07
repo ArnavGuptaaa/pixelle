@@ -1,4 +1,7 @@
+// Icons
 import { RouteOff } from "lucide-react";
+
+// Other Imports
 import { Link } from "react-router-dom";
 
 const NotFound = () => {

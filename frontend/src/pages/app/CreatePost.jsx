@@ -1,15 +1,20 @@
+// ShadCN
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
 // Icons
 import { Captions, ImagePlus, LoaderPinwheel } from "lucide-react";
-import { useState } from "react";
 
-import { createPostService } from "@/services/AppService";
+// Hooks
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-import { useToast } from "@/hooks/use-toast";
+// Services
+import { createPostService } from "@/services/AppService";
+
+// Other Imports
 import { cn } from "@/lib/utils";
 
 const CreatePost = () => {

@@ -1,11 +1,11 @@
 // ShadCN
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Hooks
-import { useNavigate } from "react-router-dom";
-
 // Icons
 import { Users } from "lucide-react";
+
+// Hooks
+import { useNavigate } from "react-router-dom";
 
 const SearchResultCard = ({ user }) => {
 	const navigate = useNavigate();

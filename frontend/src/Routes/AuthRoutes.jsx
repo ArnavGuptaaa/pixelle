@@ -1,9 +1,10 @@
-import { Navigate, Routes, Route } from "react-router-dom";
-
 // Pages
 import Login from "@/pages/auth/Login";
-import Register from "@/pages/auth/Register";
 import NotFound from "@/pages/NotFound";
+import Register from "@/pages/auth/Register";
+
+// Other Imports
+import { Navigate, Routes, Route } from "react-router-dom";
 import AuthRouteUserCheck from "@/utils/AuthRouteUserCheck";
 
 const AuthRoutes = () => {

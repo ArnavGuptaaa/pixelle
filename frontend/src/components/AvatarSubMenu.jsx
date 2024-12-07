@@ -1,23 +1,26 @@
-import { NavLink } from "react-router-dom";
-
 // Shadcn
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
-	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+
+// Components
+import NotificationFeed from "./NotificationFeed";
 
 // Icons
 import { LogOut, User, Moon, Sun, Heart } from "lucide-react";
 
-// Theme Toggle
+// Hooks
 import { useTheme } from "@/Context/ThemeProvider";
 import { useAuth } from "@/hooks/useAuth";
-import NotificationFeed from "./NotificationFeed";
+
+// Other Imports
+import { NavLink } from "react-router-dom";
 
 const AvatarSubMenu = () => {
 	const { user, logout } = useAuth();

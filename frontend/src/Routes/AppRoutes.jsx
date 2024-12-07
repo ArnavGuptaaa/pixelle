@@ -1,19 +1,17 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-
 // Pages
 import User from "@/pages/app/User";
-import HomeFeed from "@/pages/app/HomeFeed";
+import Post from "@/pages/app/Post";
 import NotFound from "@/pages/NotFound";
+import HomeFeed from "@/pages/app/HomeFeed";
+import CreatePost from "@/pages/app/CreatePost";
+import WanderFeed from "@/pages/app/WanderFeed";
+import SearchUsers from "@/pages/app/SearchUsers";
 
 // Layouts
 import AppLayout from "@/Layouts/AppLayout";
 
-// Pages
-import UserSearch from "@/pages/app/UserSearch";
-import CreatePost from "@/pages/app/CreatePost";
-import Post from "@/pages/app/Post";
-import WanderFeed from "@/pages/app/WanderFeed";
-import SearchUsers from "@/pages/app/SearchUsers";
+// Other Imports
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const AppRoutes = () => {
 	return (
@@ -22,7 +20,7 @@ const AppRoutes = () => {
 				<Route index element={<HomeFeed />} />
 
 				<Route path="users">
-					<Route index element={<UserSearch />} />
+					<Route index element={<SearchUsers />} />
 					<Route path=":userId" element={<User />} />
 				</Route>
 

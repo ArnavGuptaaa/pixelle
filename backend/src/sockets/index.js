@@ -1,5 +1,5 @@
-import notifications from "./notifications.js";
 import jwt from "jsonwebtoken";
+import notifications from "./notifications.js";
 
 export const onlineUsers = {};
 

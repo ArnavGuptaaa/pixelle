@@ -1,21 +1,23 @@
 // ShadCN
-import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+
+// Components
+import SearchResultCard from "@/components/SearchResultCard";
+
+// Icons
+import { Search } from "lucide-react";
 
 // Hooks
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
-// Icons
-import { Search } from "lucide-react";
-
-// Components
-import SearchResultCard from "@/components/SearchResultCard";
-
 // Services
 import { getSearchResults } from "@/services/AppService";
+
+// Other Imports
+import { cn } from "@/lib/utils";
 
 const SearchUsers = () => {
 	const [searchText, setSearchText] = useState("");

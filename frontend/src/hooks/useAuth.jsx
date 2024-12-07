@@ -1,13 +1,16 @@
-import { useState, useContext, createContext, useEffect } from "react";
+// Hooks
+import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { useState, useContext, createContext, useEffect } from "react";
 
+// Services
 import {
 	loginService,
 	registerService,
 	verifyTokenService,
 } from "../services/AuthService";
 
-import { useToast } from "@/hooks/use-toast";
+// Other Imports
 import { cn } from "@/lib/utils";
 
 const AuthContext = createContext();

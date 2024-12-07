@@ -3,8 +3,8 @@ import { eq, or } from "drizzle-orm";
 import { users } from "../db/schema.js";
 
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
 // Custom rrror
 import ErrorResponse from "../utils/ErrorResponse.js";

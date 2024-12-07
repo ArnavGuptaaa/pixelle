@@ -1,15 +1,18 @@
-import { EllipsisVertical, Trash2 } from "lucide-react";
-
+// ShadCN
 import {
 	DropdownMenu,
-	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuLabel,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
+	DropdownMenuContent,
+	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
 import { Button } from "@/components/ui/button";
+
+// Icons
+import { EllipsisVertical, Trash2 } from "lucide-react";
+
+// Services
 import { deleteComment } from "@/services/AppService";
 
 const CommentSubMenu = ({ commentId, setComments }) => {

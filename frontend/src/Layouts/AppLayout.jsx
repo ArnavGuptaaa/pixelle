@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
-
 // Components
 import Navbar from "@/components/Navbar";
 import ProtectedRoute from "@/utils/ProtectedRoute";
+
+// Other Imports
+import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
 	return (
