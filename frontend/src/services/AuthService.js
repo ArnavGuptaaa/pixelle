@@ -43,7 +43,6 @@ export const verifyTokenService = async (token) => {
 
 	if (!response.ok) {
 		const error = await response.json();
-		console.log(error.errors);
 
 		throw new Error(error.message || "Token verification failed");
 	}

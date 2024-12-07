@@ -5,11 +5,11 @@ import { follows, users } from "../db/schema.js";
 import { and, eq, like, sql } from "drizzle-orm";
 
 /**
- * Fetches all information and posts about user
+ * Fetches all information and posts about the user.
  *
  * @function getUser
- * @param {File} userId
- * @returns {Promise<Object>}
+ * @param {number} userId - The ID of the user to fetch data for.
+ * @returns {Promise<Object>} A promise that resolves to the user's profile information.
  */
 export const getUser = async (userId) => {
 	try {
@@ -24,21 +24,18 @@ export const getUser = async (userId) => {
 			.where(eq(users.id, userId))
 			.limit(1);
 
-		// console.log(userInfo);
 		return userInfo[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch user profile data");
 	}
 };
 
 /**
- * Creates a user follow in DB
+ * Creates a user follow record in the database.
  *
  * @function createFollowRecord
- * @param {Object} followerData
- * @returns {Promise<Object>}
+ * @param {Object} followerData - The data for the follow record, including follower and following user IDs.
+ * @returns {Promise<Object>} A promise that resolves to the follow record details.
  */
 export const createFollowRecord = async (followerData) => {
 	try {
@@ -52,19 +49,17 @@ export const createFollowRecord = async (followerData) => {
 
 		return insertFollowResult[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to follow user");
 	}
 };
 
 /**
- * Returns true if input follow exists
+ * Returns true if the follow record exists between the given users.
  *
  * @function doesFollowExist
- * @param {Number} followerId
- * @param {Number} followingId
- * @returns {Promise<Boolean>}
+ * @param {number} followerId - The ID of the follower user.
+ * @param {number} followingId - The ID of the user being followed.
+ * @returns {Promise<boolean>} A promise that resolves to true if the follow exists, false otherwise.
  */
 export const doesFollowExist = async (followerId, followingId) => {
 	try {
@@ -83,17 +78,15 @@ export const doesFollowExist = async (followerId, followingId) => {
 
 		return !!existingFollow.length;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch existing follow");
 	}
 };
 
 /**
- * increment follow count on user by 1
+ * Increments the follow count of a user by 1.
  *
  * @function incrementFollowCount
- * @param {Number} userId
+ * @param {number} userId - The ID of the user whose follow count should be incremented.
  */
 export const incrementFollowCount = async (userId) => {
 	try {
@@ -104,18 +97,16 @@ export const incrementFollowCount = async (userId) => {
 			})
 			.where(eq(users.id, userId));
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to update follow count on user");
 	}
 };
 
 /**
- * Fetches all information and posts about user
+ * Deletes a follow record from the database.
  *
  * @function deleteFollowRecord
- * @param {Number} followerId
- * @param {Number} followingId
+ * @param {number} followerId - The ID of the follower user.
+ * @param {number} followingId - The ID of the user being unfollowed.
  */
 export const deleteFollowRecord = async (followerId, followingId) => {
 	try {
@@ -132,17 +123,15 @@ export const deleteFollowRecord = async (followerId, followingId) => {
 		// Once unfollowed, update follower count on user table
 		await decrementFollowCount(followingId);
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to unfollow user");
 	}
 };
 
 /**
- * Decrement follow count on user by 1
+ * Decrements the follow count of a user by 1.
  *
  * @function decrementFollowCount
- * @param {Number} userId
+ * @param {number} userId - The ID of the user whose follow count should be decremented.
  */
 export const decrementFollowCount = async (userId) => {
 	try {
@@ -153,18 +142,16 @@ export const decrementFollowCount = async (userId) => {
 			})
 			.where(eq(users.id, userId));
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to update follow count on user");
 	}
 };
 
 /**
- * Fetch userID array of all the users followed by given user
+ * Fetches an array of user IDs of all the users followed by the given user.
  *
  * @function getFollowedUserIdArray
- * @param {number} userId
- * @returns {Promise<number[]>}
+ * @param {number} userId - The ID of the user whose followed users are to be fetched.
+ * @returns {Promise<number[]>} A promise that resolves to an array of user IDs of the users followed by the given user.
  */
 export const getFollowedUserIdArray = async (userId) => {
 	try {
@@ -175,19 +162,18 @@ export const getFollowedUserIdArray = async (userId) => {
 
 		return followingIds.map((user) => user.followingId);
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch followed users");
 	}
 };
 
 /**
- * Fetch user search results matching a given string
+ * Fetches user search results matching a given string.
  *
  * @function getUserSearchResults
- * @param {String} likeString
- * @returns {Promise<Object[]>}
+ * @param {string} likeString - The string to search for in user usernames.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of user objects matching the search criteria.
  */
+
 export const getUserSearchResults = async (likeString) => {
 	try {
 		const searchResults = await db
@@ -201,8 +187,6 @@ export const getUserSearchResults = async (likeString) => {
 
 		return searchResults;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch user search results");
 	}
 };

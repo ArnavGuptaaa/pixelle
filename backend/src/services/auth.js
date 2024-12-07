@@ -13,12 +13,12 @@ import ErrorResponse from "../utils/ErrorResponse.js";
 dotenv.config({ path: "./src/config/.env" });
 
 /**
- * Check if any existing user record in db exists with same email or username
+ * Checks if an existing user record in the database has the same email or username.
  *
  * @function userExistsWithSameUsernameOrEmail
- * @param {string} username user username
- * @param {string} email user email
- * @returns {Promise<boolean>}
+ * @param {string} username - The username to check for conflicts.
+ * @param {string} email - The email to check for conflicts.
+ * @returns {Promise<boolean>} A promise that resolves to true if a user with the same username or email exists, otherwise false.
  */
 export const userExistsWithSameUsernameOrEmail = async (username, email) => {
 	try {
@@ -40,11 +40,11 @@ export const userExistsWithSameUsernameOrEmail = async (username, email) => {
 };
 
 /**
- * Hash user password
+ * Hashes a user's password.
  *
  * @function hashPassword
- * @param {string} password user password
- * @returns {Promise<string>} hashed password
+ * @param {string} password - The user's password to hash.
+ * @returns {Promise<string>} A promise that resolves to the hashed password.
  */
 export const hashPassword = async (password) => {
 	try {
@@ -57,11 +57,11 @@ export const hashPassword = async (password) => {
 };
 
 /**
- * Create a new user in database
+ * Creates a new user in the database.
  *
  * @function createUser
- * @param {Object} userData
- * @returns {Promise<Object>} returns user id if created
+ * @param {Object} userData - The data of the user to be created.
+ * @returns {Promise<Object>} A promise that resolves to the user ID if the creation is successful.
  */
 export const createUser = async (userData) => {
 	try {
@@ -77,11 +77,11 @@ export const createUser = async (userData) => {
 };
 
 /**
- * Create JWT from user data object
+ * Creates a JWT from the provided user data object.
  *
  * @function getAccessToken
- * @param {object} userDataToBeSigned
- * @returns {string}
+ * @param {Object} userDataToBeSigned - The user data to include in the JWT payload.
+ * @returns {string} The generated JWT.
  */
 export const getAccessToken = (userDataToBeSigned) => {
 	const token = jwt.sign(userDataToBeSigned, process.env.JWT_TOKEN_SECRET, {
@@ -92,11 +92,11 @@ export const getAccessToken = (userDataToBeSigned) => {
 };
 
 /**
- * Query user with given username from database
+ * Queries the database for a user with the given username.
  *
  * @function fetchUserWithUsername
- * @param {string} username user username
- * @returns {Promise<Object>} returns user detail with matching username
+ * @param {string} username - The username to search for.
+ * @returns {Promise<Object>} A promise that resolves to the user details if a matching username is found.
  */
 export const fetchUserWithUsername = async (username) => {
 	try {
@@ -118,12 +118,12 @@ export const fetchUserWithUsername = async (username) => {
 };
 
 /**
- * Verify password by comparing hash
+ * Verifies a password by comparing the plain text password with the stored hash.
  *
  * @function verifyPassword
- * @param {string} plainTextPassword Input plain text password
- * @param {string} userPasswordHash User password hash stored in database
- * @returns {Promise<Boolean>} Returns true if passwords match, false otherwise
+ * @param {string} plainTextPassword - The input plain text password.
+ * @param {string} userPasswordHash - The user password hash stored in the database.
+ * @returns {Promise<boolean>} A promise that resolves to true if the passwords match, false otherwise.
  */
 export const verifyPassword = async (plainTextPassword, userPasswordHash) => {
 	return await bcrypt.compare(plainTextPassword, userPasswordHash);
