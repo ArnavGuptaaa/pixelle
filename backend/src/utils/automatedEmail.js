@@ -1,7 +1,7 @@
-import dotenv from "dotenv";
-import handlebars from "handlebars";
 import * as fs from "fs";
+import dotenv from "dotenv";
 import * as path from "path";
+import handlebars from "handlebars";
 import * as nodemailer from "nodemailer";
 
 // Load environment variables

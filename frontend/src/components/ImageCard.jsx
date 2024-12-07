@@ -1,12 +1,20 @@
-import { useNavigate } from "react-router-dom";
+// ShadCN
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+// Components
+import PostSubMenu from "./PostSubMenu";
+
+// Icons
 import { Heart } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+// Hooks
 import { useState } from "react";
-import { likePost, unlikePost } from "@/services/AppService";
-import PostSubMenu from "./PostSubMenu";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 import { useNotifications } from "@/hooks/useNotifications";
+
+// Services
+import { likePost, unlikePost } from "@/services/AppService";
 
 const ImageCard = ({ post }) => {
 	const navigate = useNavigate();

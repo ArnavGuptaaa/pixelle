@@ -1,4 +1,7 @@
+// Icons
 import { Heart, MessageSquareMore } from "lucide-react";
+
+// Other Imports
 import { NavLink } from "react-router-dom";
 
 const Notification = ({ notification }) => {

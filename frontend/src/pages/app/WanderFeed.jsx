@@ -1,10 +1,10 @@
 // Components
 import FeedCard from "@/components/FeedCard";
-import { useEffect, useState } from "react";
-
-// Icons
-import useFetch from "@/hooks/useFetch";
 import FeedSkeleton from "@/components/skeletons/feedSkeleton";
+
+// Hooks
+import useFetch from "@/hooks/useFetch";
+import { useEffect, useState } from "react";
 
 const WanderFeed = () => {
 	const [data, error, isLoading] = useFetch(

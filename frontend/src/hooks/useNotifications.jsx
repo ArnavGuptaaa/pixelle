@@ -1,6 +1,9 @@
-import { useEffect, useState, useContext, createContext } from "react";
-import io from "socket.io-client";
+// Hooks
 import { useAuth } from "./useAuth";
+import { useEffect, useState, useContext, createContext } from "react";
+
+// Other Imports
+import io from "socket.io-client";
 
 const NotificationContext = createContext();
 

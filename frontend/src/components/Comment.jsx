@@ -1,8 +1,12 @@
-import { useNavigate } from "react-router-dom";
-
+// ShadCN
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+// Components
 import CommentSubMenu from "./CommentSubMenu";
+
+// Hooks
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Comment = ({ comment, setComments }) => {
 	const navigate = useNavigate();

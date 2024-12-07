@@ -1,7 +1,9 @@
+// Hooks
 import { useEffect, useState } from "react";
-import axios from "axios";
-
 import { useToast } from "@/hooks/use-toast";
+
+// Other Imports
+import axios from "axios";
 import { cn } from "@/lib/utils";
 
 const useFetch = (

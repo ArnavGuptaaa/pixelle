@@ -3,10 +3,6 @@ TODO:
 
 1. Style active routes
 */
-
-// React
-import { NavLink } from "react-router-dom";
-
 // ShadCN
 import {
 	Sheet,
@@ -14,13 +10,16 @@ import {
 	SheetTrigger,
 	SheetClose,
 } from "@/components/ui/sheet";
+import { Button } from "./ui/button";
+
+// Components
+import AvatarSubMenu from "./AvatarSubMenu";
 
 // Icons
 import { Menu, CirclePlus, Search, House, Compass } from "lucide-react";
 
-// Components
-import AvatarSubMenu from "./AvatarSubMenu";
-import { Button } from "./ui/button";
+// Other Imports
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
 	const NAVBAR_ICON_SIZE = 15;

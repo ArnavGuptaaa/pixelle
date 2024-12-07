@@ -1,5 +1,8 @@
+// ShadCN
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+// Hooks
 import { useNavigate } from "react-router-dom";
 
 const FeedCard = ({ post }) => {

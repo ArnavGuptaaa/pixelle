@@ -1,24 +1,23 @@
+// ShadCN
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useParams } from "react-router-dom";
-
-// Mock Data
-import { posts } from "@/data/feedPosts";
 
 // Components
 import FeedCard from "@/components/FeedCard";
+import UserSkelton from "@/components/skeletons/UserSkelton";
+import FeedSkeleton from "@/components/skeletons/feedSkeleton";
 
 // Icons
 import { Users, UserPlus, UserMinus } from "lucide-react";
 
-// ShadCN
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { followUser, unFollowUser } from "@/services/AppService";
-import { useAuth } from "@/hooks/useAuth";
-
+// Hooks
 import useFetch from "@/hooks/useFetch";
-import UserSkelton from "@/components/skeletons/UserSkelton";
-import FeedSkeleton from "@/components/skeletons/feedSkeleton";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+// Services
+import { followUser, unFollowUser } from "@/services/AppService";
 
 const User = () => {
 	const USER_PAGE_ICON_SIZE = 15;
