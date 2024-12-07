@@ -13,6 +13,7 @@ const initializeSockets = (io) => {
 		if (!token) {
 			socket.disconnect();
 			console.log("No auth token provided. Socket disconnected");
+
 			return;
 		}
 
@@ -22,6 +23,8 @@ const initializeSockets = (io) => {
 				console.log(
 					"Token verification unsuccessful. Socket disconnected"
 				);
+
+				return;
 			}
 
 			onlineUsers[user.id] = socket.id;

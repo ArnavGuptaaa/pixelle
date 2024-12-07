@@ -3,20 +3,16 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 
 const ProtectedRoute = ({ children }) => {
-	const [accessToken, setAccessToken] = useState(
-		localStorage.getItem("token")
-	);
-
 	const navigate = useNavigate();
-	const { user, fetchUser } = useAuth();
+	const { user, token, fetchUser } = useAuth();
 
 	useEffect(() => {
 		const routCheck = async () => {
-			if (accessToken === null) {
+			if (token === null) {
 				navigate("/auth/login", { replace: true });
 			}
 
-			if (accessToken !== null && user === null) {
+			if (token !== null && user === null) {
 				await fetchUser();
 			}
 		};

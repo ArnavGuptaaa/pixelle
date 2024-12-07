@@ -1,27 +1,43 @@
 import { useEffect, useState, useContext, createContext } from "react";
 import io from "socket.io-client";
+import { useAuth } from "./useAuth";
 
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
 	const [notifications, setNotifications] = useState([]);
-	let socket;
-	let token;
+	const [socket, setSocket] = useState();
+
+	const { token } = useAuth();
 
 	useEffect(() => {
-		token = localStorage.getItem("token");
+		const connectSocket = () => {
+			if (!token) {
+				if (socket) {
+					socket.disconnect();
+				}
 
-		socket = io(import.meta.env.VITE_API_BASE_URL, {
-			query: { token },
-		});
+				return;
+			}
 
-		socket.on("notification", (data) => {
-			setNotifications((prevData) => [data, ...prevData]);
-		});
+			const returnedSocket = io(import.meta.env.VITE_API_BASE_URL, {
+				query: { token },
+			});
+
+			setSocket((prevData) => returnedSocket);
+
+			returnedSocket.on("notification", (data) => {
+				setNotifications((prevData) => [data, ...prevData]);
+			});
+		};
+
+		connectSocket();
 
 		return () => {
-			socket.off("notification");
-			socket.disconnect();
+			if (socket) {
+				socket.off("notification");
+				socket.disconnect();
+			}
 		};
 	}, [token]);
 
