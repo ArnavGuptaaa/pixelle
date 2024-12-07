@@ -20,12 +20,13 @@ import dotenv from "dotenv";
 dotenv.config({ path: "./src/config/.env" });
 
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
+
 /**
- * Upload an image to S3
+ * Uploads an image to S3.
  *
  * @function uploadImageToS3
- * @param {File} image
- * @returns {String}
+ * @param {File} image - The image file to upload.
+ * @returns {string} The name of the uploaded image.
  */
 export const uploadImageToS3 = async (image) => {
 	try {
@@ -45,18 +46,16 @@ export const uploadImageToS3 = async (image) => {
 
 		return imageName;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to upload to S3");
 	}
 };
 
 /**
- * Create a new post in database
+ * Creates a new post record in the database.
  *
  * @function createPostRecord
- * @param {Object} postData
- * @returns {Promise<Object>} returns post id if created
+ * @param {Object} postData - The data for the post to be created.
+ * @returns {Promise<Object>} A promise that resolves to the post ID if the creation is successful.
  */
 export const createPostRecord = async (postData) => {
 	try {
@@ -72,11 +71,11 @@ export const createPostRecord = async (postData) => {
 };
 
 /**
- * Get all posts for wander from DB
+ * Retrieves all posts for wander from the database.
  *
  * @function getWanderPosts
- * @param {Object} offset
- * @returns {Promise<Object>} returns posts from DB
+ * @param {Object} offset - The offset for pagination.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of posts, each with a signed image URL.
  */
 export const getWanderPosts = async (offset) => {
 	try {
@@ -111,18 +110,17 @@ export const getWanderPosts = async (offset) => {
 
 		return wanderPosts;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch wander posts");
 	}
 };
 
 /**
- * Get all posts for home feed from DB
+ * Retrieves all posts for the home feed from the database.
  *
  * @function getFeedPosts
- * @param {Object} offset
- * @returns {Promise<Object>} returns posts from DB
+ * @param {Object} offset - The offset for pagination.
+ * @param {number} userId - The ID of the user whose feed is being fetched.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of posts, each with a signed image URL.
  */
 export const getFeedPosts = async (offset, userId) => {
 	try {
@@ -167,18 +165,16 @@ export const getFeedPosts = async (offset, userId) => {
 
 		return feedPosts;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch home feed posts");
 	}
 };
 
 /**
- * Get single post matching the postId
+ * Retrieves a single post matching the given post ID.
  *
  * @function getSinglePost
- * @param {Object} postId post ID to fetch
- * @returns {Promise<Object>}
+ * @param {number} postId - The ID of the post to fetch.
+ * @returns {Promise<Object>} A promise that resolves to the post object, with a signed image URL.
  */
 export const getSinglePost = async (postId) => {
 	try {
@@ -217,18 +213,16 @@ export const getSinglePost = async (postId) => {
 
 		return singlePost[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch wander posts");
 	}
 };
 
 /**
- * Get all posts for a specific user
+ * Retrieves all posts for a specific user.
  *
  * @function getUserPosts
- * @param {Object} userId
- * @returns {Promise<Object>} returns user's posts
+ * @param {number} userId - The ID of the user whose posts are to be fetched.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of the user's posts, each with a signed image URL.
  */
 export const getUserPosts = async (userId) => {
 	try {
@@ -263,18 +257,16 @@ export const getUserPosts = async (userId) => {
 
 		return userPosts;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch user posts");
 	}
 };
 
 /**
- * Get all comments for a specific post
+ * Retrieves all comments for a specific post.
  *
  * @function getPostComments
- * @param {String} postId
- * @returns {Promise<Object>} returns post's comments
+ * @param {string} postId - The ID of the post whose comments are to be fetched.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of comments for the post.
  */
 export const getPostComments = async (postId) => {
 	try {
@@ -292,18 +284,16 @@ export const getPostComments = async (postId) => {
 
 		return postComments;
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch post comments");
 	}
 };
 
 /**
- * Create a comment
+ * Creates a new comment for a post.
  *
  * @function createCommentRecord
- * @param {String} postId
- * @returns {Promise<Object>} returns comment's ID when created
+ * @param {Object} commentData - The data for the comment, including postId, userId, and content.
+ * @returns {Promise<Object>} A promise that resolves to the ID of the created comment.
  */
 export const createCommentRecord = async (commentData) => {
 	try {
@@ -319,11 +309,11 @@ export const createCommentRecord = async (commentData) => {
 };
 
 /**
- * Get comment from a specific ID
+ * Fetches a comment by its ID.
  *
  * @function getCommentFromId
- * @param {String} commentId
- * @returns {Promise<Object>} returns comment
+ * @param {String} commentId - The ID of the comment to retrieve.
+ * @returns {Promise<Object>} A promise that resolves to the comment object.
  */
 export const getCommentFromId = async (commentId) => {
 	try {
@@ -339,35 +329,31 @@ export const getCommentFromId = async (commentId) => {
 
 		return commentResult[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch single comment");
 	}
 };
 
 /**
- * Delete comment of a given ID
+ * Deletes a comment by its ID.
  *
- * @function deleteComment
- * @param {String} commentId
+ * @function deleteCommentFromId
+ * @param {String} commentId - The ID of the comment to delete.
  */
 export const deleteCommentFromId = async (commentId) => {
 	try {
 		await db.delete(comments).where(eq(comments.id, commentId));
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to delete comment");
 	}
 };
 
 /**
- * Fetches existing like for a given post by a user
+ * Fetches the existing like for a given post by a user.
  *
  * @function getExistingLike
- * @param {String} userId
- * @param {String} postId
- * @returns {Promise<Object>} returns user's like on a post
+ * @param {String} userId - The ID of the user.
+ * @param {String} postId - The ID of the post.
+ * @returns {Promise<Object>} Returns the user's like on a post.
  */
 export const getExistingLike = async (userId, postId) => {
 	try {
@@ -383,18 +369,16 @@ export const getExistingLike = async (userId, postId) => {
 
 		return postLike[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to fetch existing likes");
 	}
 };
 
 /**
- * Create a like record in DB
+ * Create a like record in the database.
  *
  * @function createLikeRecord
- * @param {Object} likeData
- * @returns {Promise<Object>} returns like's ID when created
+ * @param {Object} likeData - The data for the like (user ID and post ID).
+ * @returns {Promise<Object>} Returns the like's ID when created.
  */
 export const createLikeRecord = async (likeData) => {
 	try {
@@ -407,17 +391,15 @@ export const createLikeRecord = async (likeData) => {
 
 		return insertLikeResult[0];
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to create like");
 	}
 };
 
 /**
- * increment like count on post by 1
+ * Increment like count on a post by 1.
  *
  * @function incrementLikeCount
- * @param {String} postId
+ * @param {String} postId - The ID of the post to increment the like count for.
  */
 export const incrementLikeCount = async (postId) => {
 	try {
@@ -428,18 +410,16 @@ export const incrementLikeCount = async (postId) => {
 			})
 			.where(eq(posts.id, postId));
 	} catch (error) {
-		console.log(error);
-
 		throw new ErrorResponse(500, "Failed to increment like count on post");
 	}
 };
 
 /**
- * Delete a like record in DB
+ * Delete a like record from the database.
  *
  * @function deleteLikeRecord
- * @param {String} userId
- * @param {String} postId
+ * @param {String} userId - The ID of the user who liked the post.
+ * @param {String} postId - The ID of the post that was liked.
  */
 export const deleteLikeRecord = async (userId, postId) => {
 	try {
@@ -454,10 +434,10 @@ export const deleteLikeRecord = async (userId, postId) => {
 };
 
 /**
- * decrement like count on post by 1
+ * Decrement like count on a post by 1.
  *
  * @function decrementLikeCount
- * @param {String} postId
+ * @param {String} postId - The ID of the post whose like count should be decremented.
  */
 export const decrementLikeCount = async (postId) => {
 	try {
@@ -473,11 +453,11 @@ export const decrementLikeCount = async (postId) => {
 };
 
 /**
- * Gets post record from DB
+ * Retrieves a post record from the database.
  *
  * @function getPostRecord
- * @param {String} postId
- * @returns {Promise<Object>} return post_id and user_id of post, if found
+ * @param {String} postId - The ID of the post to fetch.
+ * @returns {Promise<Object>} - Returns the post's ID, user ID, and image URL if found.
  */
 export const getPostRecord = async (postId) => {
 	try {
@@ -498,10 +478,10 @@ export const getPostRecord = async (postId) => {
 };
 
 /**
- * Delete post record from DB and Image From S3
+ * Deletes a post record from the database and its associated image from S3.
  *
  * @function deletePostRecord
- * @param {Object} postRecord
+ * @param {Object} postRecord - The post record to be deleted, which contains post ID and image information.
  */
 export const deletePostRecord = async (postRecord) => {
 	try {
@@ -516,10 +496,10 @@ export const deletePostRecord = async (postRecord) => {
 };
 
 /**
- * delete image from S3
+ * Deletes an image from S3 storage based on the provided post record.
  *
  * @function deleteImageFromS3
- * @param {Promise<Object>} postRecord
+ * @param {Object} postRecord - The post record that contains the image URL to be deleted.
  */
 export const deleteImageFromS3 = async (postRecord) => {
 	try {

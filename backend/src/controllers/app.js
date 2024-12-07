@@ -308,8 +308,6 @@ export const likePost = async (req, res, next) => {
 			message: "Post Liked",
 		});
 	} catch (error) {
-		console.log(error);
-
 		next(error);
 	}
 };

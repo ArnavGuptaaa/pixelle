@@ -39,8 +39,6 @@ const Register = () => {
 			password,
 		};
 
-		console.log(userCredentials);
-
 		await register(userCredentials);
 	};
 

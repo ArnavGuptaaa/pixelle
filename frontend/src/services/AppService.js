@@ -109,8 +109,6 @@ export const deletePost = async (postId) => {
 
 		return response.data;
 	} catch (error) {
-		console.log(error);
-
 		throw new Error(
 			error.response?.data?.message || "Failed to delete post"
 		);
@@ -129,8 +127,6 @@ export const deleteComment = async (commentData) => {
 
 		return response.data;
 	} catch (error) {
-		console.log(error);
-
 		throw new Error(
 			error.response?.data?.message || "Failed to delete comment"
 		);
@@ -147,8 +143,6 @@ export const getSearchResults = async (searchText) => {
 
 		return response.data;
 	} catch (error) {
-		console.log(error);
-
 		throw new Error(
 			error.response?.data?.message || "Failed to fetch search results"
 		);

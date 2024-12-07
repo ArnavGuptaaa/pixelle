@@ -53,8 +53,6 @@ export const AuthProvider = ({ children }) => {
 
 			navigate("/", { replace: true });
 		} catch (error) {
-			console.log("Login Failed : ", error.message);
-
 			setError(error.message);
 		} finally {
 			setLoading(false);
@@ -86,8 +84,6 @@ export const AuthProvider = ({ children }) => {
 
 			navigate("/", { replace: true });
 		} catch (error) {
-			console.log("Register Failed : ", error.message);
-
 			setError(error.message);
 		} finally {
 			setLoading(false);
@@ -121,7 +117,7 @@ export const AuthProvider = ({ children }) => {
 
 			setUser(userDetails);
 		} catch (error) {
-			console.log("Failed to set user : ", error.message);
+			setError(error.message);
 		} finally {
 			setLoading(false);
 		}
