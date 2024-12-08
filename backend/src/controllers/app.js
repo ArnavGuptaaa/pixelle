@@ -53,16 +53,10 @@ export const createPost = async (req, res, next) => {
 
 export const fetchWanderPosts = async (req, res, next) => {
 	try {
-		// This route is expected to have query param : page
-		// converting that to 0 index'ed page
-		const page =
-			req.query.page && req.query.page > 0 ? req.query.page - 1 : 0;
-		const offset = page * 30;
+		// fetch all posts
+		const wanderPosts = await getWanderPosts();
 
-		// fetch all posts sorted descending limit 30
-		const wanderPosts = await getWanderPosts(offset);
-
-		// return posts
+		// return posts sorted descending
 		return res.status(200).json({
 			success: true,
 			posts: wanderPosts,
@@ -74,14 +68,8 @@ export const fetchWanderPosts = async (req, res, next) => {
 
 export const fetchFeedPosts = async (req, res, next) => {
 	try {
-		// This route is expected to have query param : page
-		// converting that to 0 index'ed page
-		const page =
-			req.query.page && req.query.page > 0 ? req.query.page - 1 : 0;
-		const offset = page * 30;
-
-		// fetch all posts sorted descending limit 30
-		const feedPosts = await getFeedPosts(offset, req.user.id);
+		// fetch all posts sorted descending
+		const feedPosts = await getFeedPosts(req.user.id);
 
 		// return posts
 		return res.status(200).json({
@@ -122,7 +110,6 @@ export const fetchSinglePost = async (req, res, next) => {
 };
 
 export const fetchUserProfile = async (req, res, next) => {
-	// TODO: Integrate infinite scroll with offset
 	try {
 		// This route is expected to have request param
 		// console.log(req.params.userId);

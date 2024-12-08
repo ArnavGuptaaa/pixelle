@@ -89,7 +89,6 @@ const Post = () => {
 		setCommentContent("");
 	};
 
-	// TODO : ADD LIKE FUNCTIONALITY
 	return post ? (
 		<div className="flex-col-reverse md:flex md:flex-row justify-evenly items-start w-5/6 mx-auto h-screen">
 			{/* POST VIEW */}
