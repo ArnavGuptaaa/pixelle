@@ -28,24 +28,22 @@ export const registerService = async (userCredentials) => {
 	}
 };
 
-// TODO: Update this to axios
 export const verifyTokenService = async (token) => {
 	const VERIFY_TOKEN_URL = `${BASE_URL}/auth/me`;
 	const requestOptions = {
-		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
 		},
 	};
 
-	const response = await fetch(VERIFY_TOKEN_URL, requestOptions);
+	try {
+		const response = await axios.get(VERIFY_TOKEN_URL, requestOptions);
 
-	if (!response.ok) {
-		const error = await response.json();
-
-		throw new Error(error.message || "Token verification failed");
+		return response.data;
+	} catch (error) {
+		throw new Error(
+			error.response?.data?.message || "Token verification failed"
+		);
 	}
-
-	return await response.json();
 };
