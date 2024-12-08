@@ -74,10 +74,9 @@ export const createPostRecord = async (postData) => {
  * Retrieves all posts for wander from the database.
  *
  * @function getWanderPosts
- * @param {Object} offset - The offset for pagination.
  * @returns {Promise<Object[]>} A promise that resolves to an array of posts, each with a signed image URL.
  */
-export const getWanderPosts = async (offset) => {
+export const getWanderPosts = async () => {
 	try {
 		let wanderPosts = await db
 			.select({
@@ -90,9 +89,7 @@ export const getWanderPosts = async (offset) => {
 			})
 			.from(posts)
 			.innerJoin(users, eq(posts.user_id, users.id))
-			.orderBy(sql`${posts.created_at} DESC`)
-			.offset(offset)
-			.limit(30);
+			.orderBy(sql`${posts.created_at} DESC`);
 
 		// Replace image_url with signed image URL
 		for (let post of wanderPosts) {
@@ -118,11 +115,10 @@ export const getWanderPosts = async (offset) => {
  * Retrieves all posts for the home feed from the database.
  *
  * @function getFeedPosts
- * @param {Object} offset - The offset for pagination.
  * @param {number} userId - The ID of the user whose feed is being fetched.
  * @returns {Promise<Object[]>} A promise that resolves to an array of posts, each with a signed image URL.
  */
-export const getFeedPosts = async (offset, userId) => {
+export const getFeedPosts = async (userId) => {
 	try {
 		const followedUserIds = await getFollowedUserIdArray(userId);
 
@@ -145,9 +141,7 @@ export const getFeedPosts = async (offset, userId) => {
 			.from(posts)
 			.innerJoin(users, eq(posts.user_id, users.id))
 			.where(inArray(posts.user_id, followedUserIds))
-			.orderBy(sql`${posts.created_at} DESC`)
-			.offset(offset)
-			.limit(30);
+			.orderBy(sql`${posts.created_at} DESC`);
 
 		// Replace image_url with signed image URL
 		for (let post of feedPosts) {
