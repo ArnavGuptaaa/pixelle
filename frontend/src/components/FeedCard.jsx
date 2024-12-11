@@ -20,8 +20,7 @@ const FeedCard = ({ post }) => {
 			>
 				<div className="group-hover:opacity-100 opacity-0 flex absolute top-2 left-2 items-center justify-center ease-in-out transition duration-300">
 					<Avatar className="w-6 h-6 md:w-10 md:h-10">
-						{/* TODO: UPDATE THIS */}
-						<AvatarImage src={"test"} />
+						<AvatarImage src={post.userProfileImage} />
 						<AvatarFallback>
 							{post.username[0].toUpperCase()}
 						</AvatarFallback>

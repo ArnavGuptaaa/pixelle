@@ -21,8 +21,7 @@ const SearchResultCard = ({ user }) => {
 		>
 			<div className="flex items-center">
 				<Avatar className="cursor-pointer">
-					{/* TODO: Fix This */}
-					<AvatarImage src={"test"} />
+					<AvatarImage src={user.profileImage} />
 					<AvatarFallback>
 						{user.username[0].toUpperCase()}
 					</AvatarFallback>

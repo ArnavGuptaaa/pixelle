@@ -7,9 +7,17 @@ export const validateCreateRequest = (req, res, next) => {
 		errors.push({ field: "Image", message: "Image is required" });
 	} else if (!req.file.mimetype.startsWith("image/")) {
 		errors.push({ field: "Image", message: "Image must be an image" });
-	}
+	} else {
+		const fileSizeInMb = req.file.size / 10 ** 6;
 
-	// TODO: Add Image size validation?
+		if (fileSizeInMb > 2) {
+			errors.push({
+				field: "Image",
+				message: "Image size must not exceed 2MB",
+				uploadedFileSize: `${fileSizeInMb.toFixed(2)} MB`,
+			});
+		}
+	}
 
 	if (caption && caption.length > 200) {
 		errors.push({ field: "Caption", message: "Caption too long" });

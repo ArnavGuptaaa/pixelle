@@ -1,8 +1,3 @@
-/*
-    TODO:
-    1. Add Toast when register is successful
-*/
-
 // Shadcn
 import {
 	Card,
@@ -29,10 +24,17 @@ const Register = () => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 
-	const { register, loading, error } = useAuth();
+	const { register, loading, error, setError } = useAuth();
 
 	const handleRegister = async () => {
+		setError("");
+		if (confirmPassword !== password) {
+			setError("Passwords do not match");
+			return;
+		}
+
 		const userCredentials = {
 			username,
 			email,
@@ -106,9 +108,20 @@ const Register = () => {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
+						<div className="flex items-center">
+							<ShieldAlert size={REGISTER_PAGE_ICON_SIZE} />
+							<Label htmlFor="confirm-password" className="ml-1">
+								Confirm Password
+							</Label>
+						</div>
+						<Input
+							id="confirm-password"
+							className="mb-6 mt-1"
+							type="password"
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+						/>
 					</div>
-
-					{/* TODO: Add a 'Confirm Password' input field */}
 
 					<Button className="w-full" onClick={handleRegister}>
 						{loading && (

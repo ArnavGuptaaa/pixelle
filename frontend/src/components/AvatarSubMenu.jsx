@@ -57,7 +57,7 @@ const AvatarSubMenu = () => {
 			<DropdownMenu>
 				<DropdownMenuTrigger>
 					<Avatar className="cursor-pointer">
-						<AvatarImage src={"test"} />
+						<AvatarImage src={user?.profileImage} />
 						<AvatarFallback>
 							{user?.username[0].toUpperCase()}
 						</AvatarFallback>

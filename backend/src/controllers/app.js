@@ -128,7 +128,6 @@ export const fetchUserProfile = async (req, res, next) => {
 		// Fetch Post for given user
 		const profilePosts = await getUserPosts(req.params.userId);
 
-		// TODO: Set boolean if logged in user follows requested User
 		const isFollowed = await doesFollowExist(
 			req.user.id,
 			req.params.userId
@@ -147,8 +146,6 @@ export const fetchUserProfile = async (req, res, next) => {
 
 export const postComment = async (req, res, next) => {
 	try {
-		// TODO: check existence of post before commenting?
-
 		// create comment object
 		const commentData = {
 			post_id: req.body.postId,

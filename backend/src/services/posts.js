@@ -86,6 +86,7 @@ export const getWanderPosts = async () => {
 				likes: posts.likes,
 				userId: posts.user_id,
 				username: users.username,
+				userProfileImage: users.profile_image_url,
 			})
 			.from(posts)
 			.innerJoin(users, eq(posts.user_id, users.id))
@@ -137,6 +138,7 @@ export const getFeedPosts = async (userId) => {
 				likes: posts.likes,
 				userId: posts.user_id,
 				username: users.username,
+				userProfileImage: users.profile_image_url,
 			})
 			.from(posts)
 			.innerJoin(users, eq(posts.user_id, users.id))
@@ -228,6 +230,7 @@ export const getUserPosts = async (userId) => {
 				likes: posts.likes,
 				userId: posts.user_id,
 				username: users.username,
+				userProfileImage: users.profile_image_url,
 			})
 			.from(posts)
 			.where(eq(users.id, userId))

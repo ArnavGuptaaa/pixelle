@@ -47,7 +47,6 @@ const CreatePost = () => {
 	};
 
 	const handleSubmit = async () => {
-		// TODO: Validations before payload creation
 		setError(null);
 		setLoading(true);
 
@@ -66,6 +65,8 @@ const CreatePost = () => {
 
 			navigate("/");
 		} catch (error) {
+			console.log(error);
+
 			setError(error.message);
 		} finally {
 			setLoading(false);

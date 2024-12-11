@@ -59,11 +59,10 @@ const ImageCard = ({ post }) => {
 		<div className="">
 			<div className="flex items-center justify-start mb-2">
 				<Avatar className="w-6 h-6 md:w-12 md:h-12">
-					{/* TODO: UPDATE THIS */}
-					<AvatarImage
-						src={"https://avatars.githubusercontent.com/u/67139196"}
-					/>
-					<AvatarFallback>CN</AvatarFallback>
+					<AvatarImage src={user?.profileImage} />
+					<AvatarFallback>
+						{user?.username[0].toUpperCase()}
+					</AvatarFallback>
 				</Avatar>
 				<h2
 					className="ml-2 font-bold hover:underline cursor-pointer"

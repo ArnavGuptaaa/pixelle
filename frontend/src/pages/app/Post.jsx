@@ -61,7 +61,6 @@ const Post = () => {
 		try {
 			const response = await postComment(commentPayload);
 
-			// TODO: Add Profile picture link
 			const localComment = {
 				id: response.commentId,
 				userId: user?.id,

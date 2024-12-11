@@ -1,8 +1,3 @@
-/*
-TODO:
-
-1. Style active routes
-*/
 // ShadCN
 import {
 	Sheet,

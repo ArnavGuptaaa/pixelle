@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
 			const userDetails = {
 				id: response.user.id,
 				username: response.user.username,
+				profileImage: response.user.profileImage,
 			};
 
 			setUser(userDetails);
@@ -69,6 +70,7 @@ export const AuthProvider = ({ children }) => {
 			const userDetails = {
 				id: response.user.id,
 				username: response.user.username,
+				profileImage: response.user.profileImage,
 			};
 
 			setUser(userDetails);
@@ -109,10 +111,10 @@ export const AuthProvider = ({ children }) => {
 		try {
 			const response = await verifyTokenService(token);
 
-			// TODO: set profile picture here
 			const userDetails = {
 				id: response.user.id,
 				username: response.user.username,
+				profileImage: response.profileImage,
 			};
 
 			setUser(userDetails);
@@ -132,6 +134,7 @@ export const AuthProvider = ({ children }) => {
 		fetchUser,
 		loading,
 		error,
+		setError,
 	};
 
 	return (
