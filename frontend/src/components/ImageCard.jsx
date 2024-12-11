@@ -59,7 +59,7 @@ const ImageCard = ({ post }) => {
 		<div className="">
 			<div className="flex items-center justify-start mb-2">
 				<Avatar className="w-6 h-6 md:w-12 md:h-12">
-					<AvatarImage src={user.profileImage} />
+					<AvatarImage src={user?.profileImage} />
 					<AvatarFallback>
 						{user?.username[0].toUpperCase()}
 					</AvatarFallback>
