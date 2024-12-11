@@ -20,7 +20,7 @@ export const createPostService = async (formData) => {
 		return response.data;
 	} catch (error) {
 		throw new Error(
-			error.response?.data?.message || "Post creation failed"
+			error.response?.data?.errors[0].message || "Post creation failed"
 		);
 	}
 };

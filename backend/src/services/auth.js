@@ -104,6 +104,7 @@ export const fetchUserWithUsername = async (username) => {
 			.select({
 				userId: users.id,
 				username: users.username,
+				profileImage: users.profile_image_url,
 				passwordHash: users.password,
 				email: users.email,
 			})

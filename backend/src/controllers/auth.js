@@ -35,7 +35,7 @@ const registerUser = async (req, res, next) => {
 			username: req.body.username,
 			email: req.body.email,
 			password: hashedPassword,
-			profile_image_url: "testImageURL",
+			profile_image_url: "https://avatar.iran.liara.run/public",
 			follower_count: 0,
 		};
 
@@ -43,7 +43,6 @@ const registerUser = async (req, res, next) => {
 		const createdUser = await createUser(newUser);
 
 		// JWT sign
-		// TODO: sign profile picture here
 		const accessToken = getAccessToken({
 			id: createdUser.id,
 			username: req.body.username,
@@ -59,6 +58,7 @@ const registerUser = async (req, res, next) => {
 			user: {
 				id: createdUser.id,
 				username: newUser.username,
+				profileImage: newUser.profile_image_url,
 			},
 			accessToken,
 		});
@@ -93,7 +93,7 @@ const loginUser = async (req, res, next) => {
 			username: req.body.username,
 		});
 
-		// Response must not contain password and user DB Id
+		// Response must not contain password
 		delete loggedInUser.passwordHash;
 		// delete loggedInUser.userId;
 
@@ -104,6 +104,7 @@ const loginUser = async (req, res, next) => {
 			user: {
 				id: loggedInUser.userId,
 				username: req.body.username,
+				profileImage: loggedInUser.profileImage,
 			},
 			accessToken,
 		});
@@ -112,10 +113,17 @@ const loginUser = async (req, res, next) => {
 	}
 };
 
-const fetchUser = (req, res, next) => {
+const fetchUser = async (req, res, next) => {
+	// Get user from DB
+	let loggedInUser = await fetchUserWithUsername(req.user.username);
+
+	// Response must not contain password and email
+	delete loggedInUser.passwordHash;
+	delete loggedInUser.email;
+
 	res.status(200).json({
 		success: true,
-		user: req.user,
+		user: loggedInUser,
 	});
 };
 

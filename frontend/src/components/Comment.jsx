@@ -21,8 +21,7 @@ const Comment = ({ comment, setComments }) => {
 			{/* user info */}
 			<div className="flex items-center justify-start mb-2 cursor-pointer">
 				<Avatar className="w-6 h-6 md:w-9 md:h-9">
-					{/* TODO: Handle profile image url */}
-					<AvatarImage src="test" />
+					<AvatarImage src={user.profileImage} />
 					<AvatarFallback>
 						{comment.username[0]?.toUpperCase()}
 					</AvatarFallback>
